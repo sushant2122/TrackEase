@@ -1,0 +1,72 @@
+﻿@inject IJSRuntime JSRuntime
+
+<canvas id="myChart" width="400" height="400"></canvas>
+
+@code {
+    public decimal TotalIncome { get; set; } = 5000;
+    public decimal TotalOutgoing { get; set; } = 2000;
+    public decimal Debts { get; set; } = 1000;
+
+    private bool isInitialized = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await RenderChart();
+        }
+    }
+
+    private async Task RenderChart()
+    {
+        var data = new
+        {
+            labels = new[] { "Total Income", "Total Outgoing", "Debts" },
+            datasets = new[]
+            {
+                new
+                {
+                    data = new[] { TotalIncome, TotalOutgoing, Debts },
+                    backgroundColor = new[]
+                    {
+                        "rgba(75, 192, 192, 0.2)",
+                        "rgba(255, 99, 132, 0.2)",
+                        "rgba(255, 206, 86, 0.2)"
+                    },
+                    borderColor = new[]
+                    {
+                        "rgba(75, 192, 192, 1)",
+                        "rgba(255, 99, 132, 1)",
+                        "rgba(255, 206, 86, 1)"
+                    },
+                    borderWidth = 1
+                }
+            }
+        };
+
+        var options = new
+        {
+            responsive = true,
+            plugins = new
+            {
+                legend = new { position = "top" },
+                tooltip = new { enabled = true }
+            }
+        };
+
+        await JSRuntime.InvokeVoidAsync("createDoughnutChart", "myChart", data, options);
+        isInitialized = true;
+    }
+
+    public async Task UpdateChart(decimal income, decimal outgoing, decimal debts)
+    {
+        TotalIncome = income;
+        TotalOutgoing = outgoing;
+        Debts = debts;
+
+        if (isInitialized)
+        {
+            await RenderChart();
+        }
+    }
+}

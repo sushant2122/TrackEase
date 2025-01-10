@@ -1,0 +1,329 @@
+﻿@page "/dashboard"
+@using Microcharts
+@inject GlobalState _globalstate;
+@using SkiaSharp
+@using MudBlazor
+@using TrackEase.Models
+<head>
+    <link rel="stylesheet" href="css/Dashboard.css" />
+</head>
+
+<div class="container mt-4">
+
+
+    <!-- Cards for Totals -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="dashboard-card bg-primary text-white text-center">
+                <h5>Total Balance</h5>
+                <h2> @totalBalance</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-card bg-success text-white text-center">
+                <h5>Total Inflows</h5>
+                <h2>@totalIncome</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-card bg-danger text-white text-center">
+                <h5>Total Outflows</h5>
+                <h2>@totalExpense</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-card bg-warning text-white text-center">
+                <h5>Total Debt</h5>
+                <h2>@totalDebt</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Transaction Button -->
+    <div class="d-flex justify-content-end mb-3">
+        <button class="btn btn-primary" @onclick="OpenModal">Add Transaction</button>
+    </div>
+
+    <!-- Financial Overview and Transactions -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="dashboard-card">
+                <h5>Financial Overview</h5>
+                <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px"
+                          InputData="@data"
+                          InputLabels="@labels"
+                           />
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="dashboard-card">
+                <h5>Top Transactions</h5>
+                <div class="mb-3">
+                    <label>Filter Transactions by Date</label>
+                    <div class="d-flex">
+                        <input type="date" class="form-control me-2" @bind="startDate" />
+                        <input type="date" class="form-control ms-2" @bind="endDate" />
+                    </div>
+                </div>
+                <div class="transaction-list">
+                    <table class="table">
+                        <thead>
+                            <tr>
+
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Tag</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                                <th>Notes</th>
+                            </tr>
+
+                        </thead>
+                        <tbody id="transactionTable">
+                            @if (transactions.Any())
+                            {
+                                @foreach (var transaction in FilteredTransactions())
+                                {
+                                    <tr>
+
+                                        <td><span>@transaction.Title</span></td>
+                                        <td><span>@transaction.Description</span></td>
+                                        <td><span>@transaction.TagName</span></td>
+                                        <td>  <span>@transaction.Date.ToString("yyyy-MM-dd")</span></td>
+                                        <td>    <span>@transaction.Amount</span></td>
+                                        <td>     <span class="@(transaction.Type == "Income" ? "text-success" : "text-danger")">@transaction.Type</span></td>
+                                        <td> <span>@transaction.Notes</span></td>
+
+                                    </tr>
+                                }
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7">No transactions found.</td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Transaction modal-->
+@if (showModal)
+{
+    <div class="modal fade show" tabindex="-1" role="dialog" style="z-index: 1050;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Transaction</h5>
+                    <button type="button" class="btn-close" @onclick="CloseModal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label>Title</label>
+                        <input type="text" class="form-control" @bind="newTransaction.Title" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Description</label>
+                        <input type="text" class="form-control" @bind="newTransaction.Description" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Tags</label>
+                        <select class="form-control" @bind="newTransaction.TagName">
+                            @if (_tags.Any())
+                            {
+                                @foreach (var tag in _tags)
+                                {
+                                    <option value="@tag.TagName">@tag.TagName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Date</label>
+                        <input type="date" class="form-control" @bind="newTransaction.Date" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Amount</label>
+                        <input type="number" class="form-control" @bind="newTransaction.Amount" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Type</label>
+                        <select class="form-control" @bind="newTransaction.Type">
+                            <option value=""></option>
+                            <option value="Income">Income</option>
+                            <option value="Expense">Expense</option>
+                            <option value="Debt">Debt</option>
+                        </select>
+                    </div>
+
+                    @if (newTransaction.Type == "Debt")
+                    {
+                        <div class="mb-3">
+                            <label>Due Date</label>
+                            <input type="date" class="form-control" @bind="newDebt.DueDate" />
+                        </div>
+                    }
+                    <div class="mb-3">
+                        <label>Notes</label>
+                        <input type="text" class="form-control" @bind="newTransaction.Notes" />
+                    </div>
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="alert alert-danger">@ErrorMessage</div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CloseModal">Close</button>
+                    <button type="button" class="btn btn-primary" @onclick="AddTransaction">Add</button>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    private string? ErrorMessage;
+    private double[] data = new double[] {};
+
+    // Labels for the chart
+    private string[] labels = new string[] { "Income", "Expense", "Debt" };
+
+ 
+
+    // Fields
+    private Models.Transaction newTransaction = new();
+    private List<Models.Tag> _tags = new();
+    private Models.Debt newDebt = new();
+    private bool showModal = false;
+    private decimal totalIncome;
+    private decimal totalExpense;
+    private decimal totalDebt;
+    private decimal totalBalance;
+    private DateTime? startDate;
+    private DateTime? endDate;
+    private List<Models.Transaction> transactions = new();
+
+    // Transaction list
+
+    public List<Tag> GetAllTags()
+    {
+        // Example of fetching tags from a local source
+        if (_tags == null || !_tags.Any())
+        {
+            _tags = TagService.GetAllTags(); // Ensure this is a synchronous call
+        }
+        return _tags;
+    }
+    private async Task<List<Models.Transaction>> GetTransactions()
+    {
+        try
+        {
+            transactions = await TransactionSerive.GetAllTransactions();
+            return transactions;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception();
+        }
+    }
+
+
+    // Initialize totals - Ensure this method is non-static
+    protected override async Task OnInitializedAsync()
+    {
+        await GetTransactions();
+        _tags = GetAllTags(); // Synchronously fetch tags
+        CalculateTotals();
+    }
+
+    // Calculate totals
+    private void CalculateTotals()
+    {
+        totalIncome = transactions.Where(t => t.Type == "Income").Sum(t => t.Amount);
+        totalExpense = transactions.Where(t => t.Type == "Expense").Sum(t => t.Amount);
+        totalDebt = transactions.Where(t => t.Type == "Debt").Sum(t => t.Amount);
+        totalBalance = totalIncome + totalDebt - totalExpense;
+
+        // Convert the totals to a double[] for chart data
+        data = new double[] { (double)totalIncome, (double)totalExpense, (double)totalDebt };
+    }
+
+    // Filter transactions
+    private IEnumerable<Models.Transaction> FilteredTransactions()
+    {
+        return transactions.Where(t =>
+            (!startDate.HasValue || t.Date >= startDate) &&
+            (!endDate.HasValue || t.Date <= endDate));
+    }
+
+    // Open modal
+    private void OpenModal()
+    {
+        newTransaction = new Models.Transaction { Date = DateTime.Now };
+        if (_tags == null || !_tags.Any())
+        {
+            _tags = GetAllTags(); // Ensure tags are populated
+        }
+        showModal = true;
+    }
+
+    // Close modal
+    private void CloseModal() => showModal = false;
+    
+    
+    // Add transaction
+    private async Task AddTransaction()
+    {
+        try
+        {
+            // Check if the transaction type is "Expenses"
+            if (newTransaction.Type == "Expense")
+            {
+                var totalIncome = totalBalance;
+
+                // Validate if the expense exceeds the income
+              
+                if (totalIncome < newTransaction.Amount)
+                {
+                    // Display an error message and exit the method
+                    Console.WriteLine("Error: Insufficient funds. The transaction could not be saved.");
+                    ErrorMessage = "Insufficient amount";
+                    return; // Prevent further execution
+                }
+            }
+
+            // Add the transaction using the service
+            var result = await TransactionSerive.addTransaction(newTransaction);
+
+            if (result)
+            {
+                Console.WriteLine("Transaction added successfully!");
+                newTransaction = new Models.Transaction(); // Reset the form
+                await GetTransactions(); // Refresh transactions
+                CalculateTotals(); // Recalculate totals
+                CloseModal(); // Close the modal
+            }
+            else
+            {
+                Console.WriteLine("Failed to add the transaction. Please check the details.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding transaction: {ex.Message}");
+        }
+    }
+
+
+}

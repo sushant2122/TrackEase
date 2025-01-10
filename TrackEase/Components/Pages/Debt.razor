@@ -1,0 +1,121 @@
+﻿@page "/debt"
+
+<head>
+    <link rel="stylesheet" href="css/Debt.css" />
+</head>
+
+<h1><b>Debts</b></h1>
+
+<div class="mt-5">
+    <h2><b>Remaining Debts</b></h2>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>S.N</th>
+                    <th>Title</th>
+                    <th>Amount</th>
+                    <th>Due Date</th>
+                    <th>Tag</th>
+                    <th>Source</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Groceries</td>
+                    <td>Npr. 2,300</td>
+                    <td>2024/04/30</td>
+                    <td>Debt</td>
+                    <td>Kumari Bank</td>
+                    <td>pending</td>
+                    <td>
+                        <form method="post" onsubmit="handleSubmit(event)">
+                            <button type="submit" class="update-button">Clear debt</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-5">
+    <h2><b>All Debts</b></h2>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>S.N</th>
+                    <th>Title</th>
+                    <th>Amount</th>
+                    <th>Due Date</th>
+                    <th>Tag</th>
+                    <th>Source</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Groceries</td>
+                    <td>Npr. 2,300</td>
+                    <td>2024/04/30</td>
+                    <td>Debt</td>
+                    <td>Kumari Bank</td>
+                    <td>pending</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Deposit Popup Form -->
+<div class="popup-container" id="depositPopup" style="display: none;">
+    <div class="popup">
+        <button class="close-btn" onclick="closePopup()">×</button>
+        <h3><b>Deposit</b></h3>
+        <form id="depositForm">
+            <div class="form-group">
+                <label for="depositTitle"><b>Title</b></label>
+                <input type="text" class="form-control" id="depositTitle" placeholder="Enter deposit title" required>
+            </div>
+            <div class="form-group">
+                <label for="depositTag"><b>Tag</b></label>
+                <select class="form-control" id="depositTag" required>
+                    <option value="">Select Tag</option>
+                    <option value="Salary">Salary</option>
+                    <option value="Bonus">Bonus</option>
+                    <option value="Gift">Gift</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="depositAmount"><b>Amount</b></label>
+                <input type="number" class="form-control" id="depositAmount" placeholder="Enter amount" required>
+            </div>
+            <div class="form-group">
+                <label for="depositNotes"><b>Notes</b></label>
+                <textarea class="form-control" id="depositNotes" placeholder="Enter any notes" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Deposit</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Function to open the popup
+    function openPopup() {
+        document.getElementById("depositPopup").style.display = "flex";
+    }
+
+    // Function to close the popup
+    function closePopup() {
+        document.getElementById("depositPopup").style.display = "none";
+    }
+</script>
+
+@code {
+    // Add your C# code here if needed
+}

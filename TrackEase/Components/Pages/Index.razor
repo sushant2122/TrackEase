@@ -1,0 +1,13 @@
+﻿@page "/"
+
+@code {
+   [CascadingParameter]
+    private GlobalState _globalState { get; set;}
+
+    // Lifecycle method triggered on component initialization
+    protected override void OnInitialized()
+    {
+        // Redirect to the login page on initialization
+        Nav.NavigateTo("/login");
+    }
+}

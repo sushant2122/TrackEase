@@ -1,0 +1,180 @@
+﻿// Transaction.razor
+@page "/transaction"
+@using TrackEase.Models;
+
+<head>
+    <link rel="stylesheet" href="css/Transaction.css" />
+</head>
+
+<h1><b>Transaction</b></h1>
+
+<!-- Search Bar and Date Filter -->
+<div class="search-filter-container">
+    <div class="search-bar">
+        <input type="text" @bind="searchTitle"
+               class="form-control"
+               id="searchInput"
+               placeholder="Search by title, type, or tag..." />
+    </div>
+    <div class="date-filter">
+        <label for="startDate">Start Date:</label>
+        <input type="date" class="form-control" @bind="startDate" id="startDate" />
+
+        <label for="endDate">End Date:</label>
+        <input type="date" class="form-control" @bind="endDate" id="endDate" />
+
+        <button class="btn filter-button" @onclick="ApplyFilters">Filter</button>
+    </div>
+</div>
+
+<!-- Transactions Table -->
+<div class="mt-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Tag</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Notes</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="transactionTable">
+            @if (FilteredTransactions().Any())
+            {
+                @foreach (var transaction in FilteredTransactions())
+                {
+                    <tr>
+                        <td>@transaction.Title</td>
+                        <td>@transaction.Description</td>
+                        <td><span>@transaction.TagName</span></td>
+                        <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@transaction.Amount</td>
+                        <td class="@(transaction.Type == "Income" ? "text-success" : "text-danger")">@transaction.Type</td>
+                        <td>@transaction.Notes</td>
+                        <td>
+                            <button type="button" class="update-button">Edit</button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7">No transactions found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Add Custom Tag -->
+<div class="mt-5 flex1">
+    <h3><b>Add Custom Tag</b></h3>
+    <form id="customTagForm" @onsubmit="HandleTagSubmit">
+        <div class="form-group">
+            <div class="mb-3">
+                <label for="custom_tag"><b>Custom Tag Title:</b></label>
+                <input type="text" @bind="newTag.TagName" class="form-control" id="custom_tag" placeholder="Enter a custom tag" required />
+            </div>
+            <div class="mb-3">
+                <label>Type</label>
+                <select class="form-control" @bind="newTag.TagType">
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn update-button mt-3">Add Tag</button>
+    </form>
+</div>
+
+<!-- Tags Table -->
+<div class="mt-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tag Name</th>
+                <th>Tag Type</th>
+            </tr>
+        </thead>
+        <tbody id="tagTable">
+            @if (tags.Any())
+            {
+                @foreach (var tag in tags)
+                {
+                    <tr>
+                        <td>@tag.TagName</td>
+                        <td>@tag.TagType</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2">No tags found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private List<Models.Transaction> transactions = new();
+    private List<Tag> tags = new();
+    private Tag newTag = new();
+    private string searchTitle;
+    private DateTime? startDate;
+    private DateTime? endDate;
+
+   
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            transactions = await TransactionSerive.GetAllTransactions();
+            tags = TagService.GetAllTags();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error initializing data: {ex.Message}");
+        }
+    }
+
+    private IEnumerable<Models.Transaction> FilteredTransactions()
+    {
+        return transactions.Where(t =>
+            (string.IsNullOrEmpty(searchTitle) || t.Title.Contains(searchTitle, StringComparison.OrdinalIgnoreCase)) &&
+            (!startDate.HasValue || t.Date >= startDate) &&
+            (!endDate.HasValue || t.Date <= endDate));
+    }
+
+    private void ApplyFilters()
+    {
+        StateHasChanged();
+    }
+
+    private void HandleTagSubmit()
+    {
+        try
+        {
+            if (TagService.AddTag(newTag))
+            {
+                newTag = new Tag(); // Reset form
+                tags = TagService.GetAllTags(); // Refresh the tags list
+                Console.WriteLine("Tag added successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Failed to add tag. Duplicate or invalid input.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding tag: {ex.Message}");
+        }
+    }
+}

@@ -1,0 +1,59 @@
+﻿@page "/login"
+
+
+<head>
+	<link rel="stylesheet" href="css/Login.css" />
+</head>
+
+<div class="popup-container">
+	<div class="popup">
+		<h3><b>Login</b></h3>
+		<form @onsubmit="HandleLoginAsync">
+			<div class="form-group">
+				<label for="username1"><b>Username</b></label>
+				<input type="text" class="form-control" @bind="Users.Username" id="username1" placeholder="Enter username">
+			</div>
+			<div class="form-group">
+				<label for="Password1"><b>Password</b></label>
+				<input type="password" class="form-control" @bind="Users.Password" id="Password1" placeholder="Password">
+			</div>
+			<div class="form-group">
+				<label for="Currency1"><b>Select Currency</b></label>
+				<select class="form-control" id="Currency1" @bind="Users.Pref_currency">
+					<option value="Npr">Npr</option>
+					<option value="Aud">Aud</option>
+				</select>
+			</div>
+			@if (!string.IsNullOrEmpty(ErrorMessage))
+			{
+				<div class="alert alert-danger">@ErrorMessage</div>
+			}
+			<button type="submit" class="btn btn-primary">Login</button>
+		</form>
+	</div>
+</div>
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+	<div class="alert alert-danger">@ErrorMessage</div>
+}
+
+@code {
+
+
+	public Models.User Users { get; set; } = new();
+	private string? ErrorMessage;
+
+	private async void HandleLoginAsync()
+	{
+		if (await UserService.Login(Users))
+		{
+			
+			Nav.NavigateTo("/dashboard");
+		}
+		else
+		{
+			ErrorMessage = "Invalid username or password.";
+		}
+	}
+}

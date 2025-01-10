@@ -1,0 +1,83 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">TrackEase</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+        <!-- Dashboard Navigation Link -->
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="dashboard" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Dashboard
+            </NavLink>
+        </div>
+
+        <!-- Transaction Navigation Link -->
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="transaction">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Transaction
+            </NavLink>
+        </div>
+
+        <!-- Debt Navigation Link -->
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="debt">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Debt
+            </NavLink>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="nav-item px-3">
+            <button type="button" class="btn btn-primary w-100" @onclick="ShowLogoutConfirmation">Logout</button>
+        </div>
+    </nav>
+</div>
+
+@if (IslogOut)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: block; background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: auto;">
+        <div class="modal-dialog" role="document" style="margin-top: 20%; margin-left: auto; margin-right: auto; max-width: 400px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Logout</h5>
+                    <button type="button" class="close" @onclick="HideLogoutConfirmation">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to logout?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="HideLogoutConfirmation">No</button>
+                    <button type="button" class="btn btn-primary" @onclick="Logout">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    private bool IslogOut { get; set; }
+
+    // Logout handler for the logout button
+    public EventCallback LogoutHandler { get; set; } 
+
+    private async void ShowLogoutConfirmation()
+    {
+        IslogOut = true;
+    }
+
+    private async void HideLogoutConfirmation()
+    {
+        IslogOut = false;
+    }
+    private async void Logout()
+    {
+        Nav.NavigateTo("/login");
+        HideLogoutConfirmation();
+    }
+}

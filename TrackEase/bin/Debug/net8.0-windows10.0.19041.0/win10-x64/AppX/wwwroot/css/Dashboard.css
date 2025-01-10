@@ -1,0 +1,36 @@
+﻿.dashboard-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chart-container {
+    height: 300px;
+}
+
+.transaction-list {
+    margin-top: 20px;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.modal.fade.show {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5); /* For the backdrop */
+    z-index: 1050; /* Ensure the modal is above other elements */
+}
+
+.modal-backdrop {
+    z-index: 1040; /* Ensure it's below the modal */
+}
