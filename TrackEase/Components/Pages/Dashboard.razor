@@ -157,18 +157,19 @@
                             @foreach (var debt in FilterPendingDebts())
                             {
                                 <tr>
-
                                     <td>@debt.Title</td>
                                     <td>Npr. @debt.Amount</td>
                                     <td>@debt.DueDate</td>
                                     <td>@debt.Source</td>
-                                    <td><span class="text-danger">@debt.Status</span> </td>
+                                    <td><span class="text-danger">@debt.Status</span></td>
                                     <td>
-                                        <form method="post">
-                                            <button type="submit" class="update-button">Clear debt</button>
-                                        </form>
+                                        @if (debt.Status != "Cleared")
+                                        {
+                                            <button class="update-button" @onclick="() => ClearDebt(debt.Id)">Clear debt</button>
+                                        }
                                     </td>
                                 </tr>
+
                             }
                         }
                         else
@@ -270,7 +271,25 @@
             </div>
         </div>
     </div>
-    
+    @if (showErrorModal)
+    {
+        <div class="modal-overlay">
+            <div class="modal-content custom-modal-width">
+                <div class="modal-header">
+                    <h5 class="modal-title">Error</h5>
+                    <button type="button" class="btn-close" @onclick="CloseErrorModal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-danger">@errorMessage</p> <!-- Red color for the error message -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CloseErrorModal">Close</button>
+                </div>
+            </div>
+        </div>
+    }
+
+
 </div>
 <!--Transaction modal-->
 @if (showModal)
@@ -425,10 +444,10 @@
         totalIncome = transactions.Where(t => t.Type == "Income").Sum(t => t.Amount);
         totalExpense = transactions.Where(t => t.Type == "Expense").Sum(t => t.Amount);
         totalDebt = transactions.Where(t => t.Type == "Debt").Sum(t => t.Amount);
-        totalBalance = totalIncome + totalDebt - totalExpense;
         totalRemainingDebt = debts.Where(d => d.Status == "Pending").Sum(d => d.Amount);
         totalClearedDebt = debts.Where(d => d.Status == "Cleared").Sum(d => d.Amount);
-        // Convert the totals to a double[] for chart data
+        totalBalance = totalIncome + totalRemainingDebt - totalExpense;
+      
         data = new double[] { (double)totalIncome, (double)totalExpense, (double)totalDebt };
     }
 
@@ -473,7 +492,6 @@
     }
 
 
-
     // Open modal
     private void OpenModal()
     {
@@ -490,17 +508,21 @@
     
     
     // Add transaction
- // Add transaction
-private async Task AddTransaction()
+    private async Task AddTransaction()
 {
     try
     {
+        // Validate that the transaction type is not null or empty
+        if (string.IsNullOrEmpty(newTransaction.Type))
+        {
+            ErrorMessage = "Transaction type cannot be empty. Please select a type.";
+            return; // Stop execution if the type is invalid
+        }
+
         // Validate if the transaction is an "Expense" and check for sufficient funds
         if (newTransaction.Type == "Expense")
         {
-            var totalIncome = totalBalance;
-
-            if (totalIncome < newTransaction.Amount)
+            if (totalBalance < newTransaction.Amount)
             {
                 ErrorMessage = "Insufficient amount";
                 return; // Prevent further execution
@@ -514,7 +536,6 @@ private async Task AddTransaction()
             if (string.IsNullOrEmpty(Source))
             {
                 ErrorMessage = "Please select a debt source.";
-               
                 return;
             }
 
@@ -557,6 +578,60 @@ private async Task AddTransaction()
         Console.WriteLine($"Error adding transaction: {ex.Message}");
         ErrorMessage = "An unexpected error occurred.";
     }
+}
+
+private bool showErrorModal = false;
+private string errorMessage = string.Empty;
+private async Task ClearDebt(int debtId)
+{
+    // Retrieve the debt by its ID
+    var debt = DebtService.GetAllDebts().FirstOrDefault(d => d.Id == debtId);
+    if (debt == null)
+    {
+        Console.WriteLine("Debt not found.");
+        return;
+    }
+
+    // Ensure totalBalance is updated correctly
+    decimal totalBalance = this.totalBalance; // This should reflect the current total balance
+
+    
+
+    // Check if the total balance is sufficient to clear the debt
+    if (totalBalance < debt.Amount)
+    {
+        // Insufficient balance error
+        errorMessage = "Insufficient balance to clear the debt.";
+        showErrorModal = true;  // Show the error popup
+        Console.WriteLine("Insufficient balance to clear the debt.");
+        return;
+    }
+
+    // If the balance is sufficient, clear the debt
+    var success = await DebtService.ClearDebt(debtId);
+
+    if (success)
+    {
+       
+        debts = DebtService.GetAllDebts();
+        CalculateTotals(); // Recalculate totals
+
+        // Provide success feedback
+        Console.WriteLine("Debt cleared successfully.");
+        
+    }
+    else
+    {
+        // If Debt clearing fails, show error message
+        Console.WriteLine("Failed to clear the debt.");
+        errorMessage = "Failed to clear the debt. Please try again.";
+        showErrorModal = true;  // Show the error popup
+    }
+}
+
+private void CloseErrorModal()
+{
+    showErrorModal = false;
 }
 
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TrackEase")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+6d2e6f7e308c2774b0b75912b8427042b23f6deb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+e056dab2097dabcb42c2af5aac55090156d82ce8")]
 [assembly: System.Reflection.AssemblyProductAttribute("TrackEase")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TrackEase")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

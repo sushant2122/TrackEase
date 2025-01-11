@@ -60,7 +60,37 @@ public class DebtService : BaseService<Debt>, IDebtService
             return false;
         }
     }
+    public async Task<bool> ClearDebt(int debtId)
+    {
+        try
+        {
+            // Find the debt by its ID
+            var debt = _debts.FirstOrDefault(d => d.Id == debtId);
 
+            if (debt == null)
+            {
+                // Debt not found
+                Console.WriteLine($"Debt with ID {debtId} not found.");
+                return false;
+            }
+
+            // Update the debt status to 'Cleared' and set the ClearedDate
+            debt.Status = "Cleared";
+            debt.ClearedDate = DateOnly.FromDateTime(DateTime.Now); // Set the cleared date to current date
+
+            // Save the updated list of debts to the file
+            SaveAll(_debts, AppDebtsFilePath); // Ensure SaveAll handles potential issues
+
+            Console.WriteLine($"Debt with ID {debtId} has been cleared.");
+            return true; // Return true to indicate success
+        }
+        catch (Exception ex)
+        {
+            // Log the error and return false to indicate failure
+            Console.WriteLine($"Error clearing debt: {ex.Message}");
+            return false;
+        }
+    }
 
     
 }

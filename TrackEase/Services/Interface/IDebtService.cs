@@ -7,4 +7,6 @@ public interface IDebtService
     Task<bool> addDebt(Debt debt);
 
     List<Debt> GetAllDebts();
+
+    Task<bool> ClearDebt(int debtId);
 }

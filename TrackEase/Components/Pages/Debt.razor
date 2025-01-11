@@ -5,55 +5,7 @@
 </head>
 
 <h1><b>Debts</b></h1>
-
 <div class="mt-5">
-    <h2><b>Pending Debts</b></h2>
-    <div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>S.N</th>
-                    <th>Title</th>
-                    <th>Amount</th>
-                    <th>Due Date</th>
-                    <th>Source</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            @if (debts.Any())
-            {
-                @foreach (var debt in FilterPendingDebts())
-                {
-                    <tr>
-                        <td>@debt.Id</td>
-                        <td>@debt.Title</td>
-                        <td>Npr. @debt.Amount</td>
-                        <td>@debt.DueDate</td>
-                        <td>@debt.Source</td>
-                        <td><span class="text-danger">@debt.Status</span> </td>
-                        <td>
-                            <form method="post" >
-                                <button type="submit" class="update-button">Clear debt</button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            }  else
-            {
-                <tr>
-                    <td colspan="7">No Debts found.</td>
-                </tr>
-            }
-           
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="mt-5">
-    <h2><b>Cleared Debts</b></h2>
     <div>
         <table class="table">
             <thead>
@@ -70,7 +22,7 @@
             <tbody>
             @if (debts.Any())
             {
-                @foreach (var debt in FilterClearedDebts())
+                @foreach (var debt in debts)
                 {
                     <tr>
                         <td>@debt.Id</td>
@@ -79,7 +31,12 @@
                         <td>@debt.DueDate</td>
                         <td>@debt.ClearedDate</td>
                         <td>@debt.Source</td>
-                        <td><span class="text-success"> @debt.Status</span></td>
+                        <td>
+                            <span class="@((debt.Status == "Pending") ? "text-danger" : "text-success")">
+                                @debt.Status
+                            </span>
+                        </td>
+
                     </tr>
                 }
             }  else
@@ -110,14 +67,6 @@
         }
     }
     
-    private IEnumerable<Models.Debt> FilterPendingDebts()
-    {
-        return debts.Where(d => d.Status.Equals("Pending", StringComparison.OrdinalIgnoreCase));
-    }
-    
-    private IEnumerable<Models.Debt> FilterClearedDebts()
-    {
-        return debts.Where(d => d.Status.Equals("Cleared", StringComparison.OrdinalIgnoreCase));
-    }
+  
 
 }
