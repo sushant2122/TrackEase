@@ -13,7 +13,7 @@
         <input type="text" @bind="searchTitle"
                class="form-control"
                id="searchInput"
-               placeholder="Search by title" />
+               placeholder="Search by title, tag" />
     </div>
     <div class="type-filter">
         <label for="typeFilter">Type:</label>
@@ -100,11 +100,12 @@
             Console.WriteLine($"Error initializing data: {ex.Message}");
         }
     }
-
     private IEnumerable<Models.Transaction> FilteredTransactions()
     {
         return transactions.Where(t =>
-            (string.IsNullOrEmpty(searchTitle) || t.Title.Contains(searchTitle, StringComparison.OrdinalIgnoreCase)) &&
+            (string.IsNullOrEmpty(searchTitle) || 
+             t.Title.Contains(searchTitle, StringComparison.OrdinalIgnoreCase) || 
+             (!string.IsNullOrEmpty(t.TagName) && t.TagName.Contains(searchTitle, StringComparison.OrdinalIgnoreCase))) &&
             (string.IsNullOrEmpty(selectedType) || t.Type.Equals(selectedType, StringComparison.OrdinalIgnoreCase)) &&
             (!startDate.HasValue || t.Date >= startDate) &&
             (!endDate.HasValue || t.Date <= endDate));
