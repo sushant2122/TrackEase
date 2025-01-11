@@ -46,7 +46,6 @@ public class TransactionService : BaseService<Transaction>, ITransactionService
 
             // Update the transaction fields
             transaction.Title = updatedTransaction.Title;
-            transaction.Description = updatedTransaction.Description;
             transaction.TagName = updatedTransaction.TagName;
             transaction.Date = updatedTransaction.Date;
             transaction.Amount = updatedTransaction.Amount;
@@ -75,7 +74,6 @@ public class TransactionService : BaseService<Transaction>, ITransactionService
             {
                 Id = _transactions.Any() ? _transactions.Max(t => t.Id) + 1 : 1, // Assign a unique Id
                 Title = transaction.Title,
-                Description = transaction.Description,
                 TagName = transaction.TagName,
                 Date = transaction.Date,
                 Amount = transaction.Amount,

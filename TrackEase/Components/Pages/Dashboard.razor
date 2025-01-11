@@ -86,7 +86,7 @@
                         <tr>
 
                             <th>Title</th>
-                            <th>Description</th>
+                    
                             <th>Tag</th>
                             <th>Date</th>
                             <th>Amount</th>
@@ -103,7 +103,7 @@
                                 <tr>
 
                                     <td><span>@transaction.Title</span></td>
-                                    <td><span>@transaction.Description</span></td>
+                              
                                     <td><span>@transaction.TagName</span></td>
                                     <td>  <span>@transaction.Date.ToString("yyyy-MM-dd")</span></td>
                                     <td>    <span>@transaction.Amount</span></td>
@@ -222,7 +222,7 @@
                         <tr>
 
                             <th>Title</th>
-                            <th>Description</th>
+                  
                             <th>Tag</th>
                             <th>Date</th>
                             <th>Amount</th>
@@ -239,7 +239,7 @@
                                 <tr>
 
                                     <td><span>@transaction.Title</span></td>
-                                    <td><span>@transaction.Description</span></td>
+                             
                                     <td><span>@transaction.TagName</span></td>
                                     <td>  <span>@transaction.Date.ToString("yyyy-MM-dd")</span></td>
                                     <td>    <span>@transaction.Amount</span></td>
@@ -305,10 +305,6 @@
                     <div class="mb-3">
                         <label>Title</label>
                         <input type="text" class="form-control" @bind="newTransaction.Title" />
-                    </div>
-                    <div class="mb-3">
-                        <label>Description</label>
-                        <input type="text" class="form-control" @bind="newTransaction.Description" />
                     </div>
                     <div class="mb-3">
                         <label>Tags</label>
