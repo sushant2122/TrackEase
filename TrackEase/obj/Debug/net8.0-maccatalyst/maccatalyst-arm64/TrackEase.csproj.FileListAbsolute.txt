@@ -338,6 +338,7 @@
 /Users/sushant/Documents/3rd year/Dot net/coursework/TrackEase/TrackEase/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/TrackEase.pdb
 /Users/sushant/Documents/3rd year/Dot net/coursework/TrackEase/TrackEase/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/TrackEase.genruntimeconfig.cache
 /Users/sushant/Documents/3rd year/Dot net/coursework/TrackEase/TrackEase/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/ref/TrackEase.dll
+/Users/sushant/Documents/3rd year/Dot net/coursework/TrackEase/TrackEase/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/TrackEase.sourcelink.json
 /Users/sushant/Documents/3rd year/Dot net/coursework/TrackEase/TrackEase/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/resourcestamps/Microcharts.Maui.stamp
 /Users/sushant/Documents/3rd year/Dot net/coursework/TrackEase/TrackEase/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/resourcestamps/Microsoft.AspNetCore.Authorization.stamp
 /Users/sushant/Documents/3rd year/Dot net/coursework/TrackEase/TrackEase/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/resourcestamps/Microsoft.AspNetCore.Components.stamp

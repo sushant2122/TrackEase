@@ -16,6 +16,8 @@ public class TransactionService : BaseService<Transaction>, ITransactionService
     public TransactionService()
     {
         _transactions = GetAll(AppTransactionsFilePath);
+        
+
 
       
     }
@@ -23,7 +25,9 @@ public class TransactionService : BaseService<Transaction>, ITransactionService
     // Simulated retrieval logic
     public async Task<List<Transaction>> GetAllTransactions()
     {
+     
         return _transactions;
+        
     }
 
     // Simulated Register New Users logic

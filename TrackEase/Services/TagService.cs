@@ -12,6 +12,7 @@ public class TagService : BaseService<Tag>, ITagService
     public TagService()
     {
         _tags = GetAll(AppTagsFilePath);
+
     }
 
     public List<Tag> GetAllTags()
