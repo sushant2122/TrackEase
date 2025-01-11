@@ -1,4 +1,4 @@
-﻿// Transaction.razor
+﻿
 @page "/transaction"
 @using TrackEase.Models;
 
@@ -7,14 +7,22 @@
 </head>
 
 <h1><b>Transaction</b></h1>
-
-<!-- Search Bar and Date Filter -->
+<!-- Search Bar and Filters -->
 <div class="search-filter-container">
     <div class="search-bar">
         <input type="text" @bind="searchTitle"
                class="form-control"
                id="searchInput"
-               placeholder="Search by title, type, or tag..." />
+               placeholder="Search by title" />
+    </div>
+    <div class="type-filter">
+        <label for="typeFilter">Type:</label>
+        <select class="form-control" id="typeFilter" @bind="selectedType">
+            <option value="">All</option>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+            <option value="Debt">Debt</option>
+        </select>
     </div>
     <div class="date-filter">
         <label for="startDate">Start Date:</label>
@@ -53,7 +61,7 @@
                         <td><span>@transaction.TagName</span></td>
                         <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
                         <td>@transaction.Amount</td>
-                        <td class="@(transaction.Type == "Income" ? "text-success" : "text-danger")">@transaction.Type</td>
+                        <td class="@(transaction.Type == "Income" ? "text-success" : transaction.Type == "Expense" ? "text-danger" : "text-warning")">@transaction.Type</td>
                         <td>@transaction.Notes</td>
                         <td>
                             <button type="button" class="update-button">Edit</button>
@@ -64,58 +72,7 @@
             else
             {
                 <tr>
-                    <td colspan="7">No transactions found.</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-<!-- Add Custom Tag -->
-<div class="mt-5 flex1">
-    <h3><b>Add Custom Tag</b></h3>
-    <form id="customTagForm" @onsubmit="HandleTagSubmit">
-        <div class="form-group">
-            <div class="mb-3">
-                <label for="custom_tag"><b>Custom Tag Title:</b></label>
-                <input type="text" @bind="newTag.TagName" class="form-control" id="custom_tag" placeholder="Enter a custom tag" required />
-            </div>
-            <div class="mb-3">
-                <label>Type</label>
-                <select class="form-control" @bind="newTag.TagType">
-                    <option value="Income">Income</option>
-                    <option value="Expense">Expense</option>
-                </select>
-            </div>
-        </div>
-        <button type="submit" class="btn update-button mt-3">Add Tag</button>
-    </form>
-</div>
-
-<!-- Tags Table -->
-<div class="mt-5">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Tag Name</th>
-                <th>Tag Type</th>
-            </tr>
-        </thead>
-        <tbody id="tagTable">
-            @if (tags.Any())
-            {
-                @foreach (var tag in tags)
-                {
-                    <tr>
-                        <td>@tag.TagName</td>
-                        <td>@tag.TagType</td>
-                    </tr>
-                }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="2">No tags found.</td>
+                    <td colspan="8">No transactions found.</td>
                 </tr>
             }
         </tbody>
@@ -129,8 +86,8 @@
     private string searchTitle;
     private DateTime? startDate;
     private DateTime? endDate;
+    private string selectedType; // New field for selected type filter
 
-   
     protected override async Task OnInitializedAsync()
     {
         try
@@ -148,6 +105,7 @@
     {
         return transactions.Where(t =>
             (string.IsNullOrEmpty(searchTitle) || t.Title.Contains(searchTitle, StringComparison.OrdinalIgnoreCase)) &&
+            (string.IsNullOrEmpty(selectedType) || t.Type.Equals(selectedType, StringComparison.OrdinalIgnoreCase)) &&
             (!startDate.HasValue || t.Date >= startDate) &&
             (!endDate.HasValue || t.Date <= endDate));
     }
