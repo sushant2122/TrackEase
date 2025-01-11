@@ -34,3 +34,15 @@
 .modal-backdrop {
     z-index: 1040; /* Ensure it's below the modal */
 }
+.update-button {
+    padding: 4px 8px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.update-button:hover {
+    background-color: #0056b3;
+}

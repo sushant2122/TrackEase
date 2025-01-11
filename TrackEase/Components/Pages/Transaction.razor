@@ -40,16 +40,16 @@
 <div class="mt-5">
     <table class="table">
         <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Tag</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Type</th>
-                <th>Notes</th>
-                <th>Action</th>
-            </tr>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Tag</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Notes</th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody id="transactionTable">
             @if (FilteredTransactions().Any())
@@ -62,7 +62,13 @@
                         <td><span>@transaction.TagName</span></td>
                         <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
                         <td>@transaction.Amount</td>
-                        <td class="@(transaction.Type == "Income" ? "text-success" : "text-danger")">@transaction.Type</td>
+                        <td>
+                            <span class="@(transaction.Type == "Debt" ? "text-warning" :
+                                         transaction.Type == "Expense" ? "text-danger" :
+                                         transaction.Type == "Income" ? "text-success" : "")">
+                                @transaction.Type
+                            </span>
+                        </td>
                         <td>@transaction.Notes</td>
                         <td>
                             <button type="button" class="update-button">Edit</button>
@@ -105,10 +111,11 @@
 <div class="mt-5">
     <table class="table">
         <thead>
-            <tr>
-                <th>Tag Name</th>
-                <th>Tag Type</th>
-            </tr>
+        <tr>
+            <th>S.N</th>
+            <th>Tag Name</th>
+            <th>Tag Type</th>
+        </tr>
         </thead>
         <tbody id="tagTable">
             @if (tags.Any())
@@ -116,6 +123,7 @@
                 @foreach (var tag in tags)
                 {
                     <tr>
+                        <td>@tag.Id</td>
                         <td>@tag.TagName</td>
                         <td>@tag.TagType</td>
                     </tr>

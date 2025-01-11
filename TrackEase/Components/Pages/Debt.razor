@@ -7,7 +7,7 @@
 <h1><b>Debts</b></h1>
 
 <div class="mt-5">
-    <h2><b>Remaining Debts</b></h2>
+    <h2><b>Pending Debts</b></h2>
     <div>
         <table class="table">
             <thead>
@@ -32,7 +32,7 @@
                         <td>Npr. @debt.Amount</td>
                         <td>@debt.DueDate</td>
                         <td>@debt.Source</td>
-                        <td>@debt.Status</td>
+                        <td><span class="text-danger">@debt.Status</span> </td>
                         <td>
                             <form method="post" >
                                 <button type="submit" class="update-button">Clear debt</button>
@@ -53,7 +53,7 @@
 </div>
 
 <div class="mt-5">
-    <h2><b>All Debts</b></h2>
+    <h2><b>Cleared Debts</b></h2>
     <div>
         <table class="table">
             <thead>

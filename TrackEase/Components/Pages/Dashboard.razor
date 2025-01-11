@@ -37,6 +37,20 @@
                 <h2>@totalDebt</h2>
             </div>
         </div>
+
+        <div class="col-md-4">
+            <div class="dashboard-card bg-info text-white text-center">
+                <h5>Remaining Debt</h5>
+                <h2>@totalRemainingDebt</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="dashboard-card bg-success  text-white text-center">
+                <h5>Cleared Debt</h5>
+                <h2>@totalClearedDebt</h2>
+            </div>
+        </div>
     </div>
 
     <!-- Add Transaction Button -->
@@ -52,7 +66,7 @@
                 <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px"
                           InputData="@data"
                           InputLabels="@labels"
-                           />
+                />
 
             </div>
         </div>
@@ -69,50 +83,111 @@
                 <div class="transaction-list">
                     <table class="table">
                         <thead>
-                            <tr>
+                        <tr>
 
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Tag</th>
-                                <th>Date</th>
-                                <th>Amount</th>
-                                <th>Type</th>
-                                <th>Notes</th>
-                            </tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Tag</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Notes</th>
+                        </tr>
 
                         </thead>
                         <tbody id="transactionTable">
-                            @if (transactions.Any())
-                            {
-                                @foreach (var transaction in FilteredTransactions())
-                                {
-                                    <tr>
-
-                                        <td><span>@transaction.Title</span></td>
-                                        <td><span>@transaction.Description</span></td>
-                                        <td><span>@transaction.TagName</span></td>
-                                        <td>  <span>@transaction.Date.ToString("yyyy-MM-dd")</span></td>
-                                        <td>    <span>@transaction.Amount</span></td>
-                                        <td>     <span class="@(transaction.Type == "Income" ? "text-success" : "text-danger")">@transaction.Type</span></td>
-                                        <td> <span>@transaction.Notes</span></td>
-
-                                    </tr>
-                                }
-
-                            }
-                            else
+                        @if (transactions.Any())
+                        {
+                            @foreach (var transaction in FilteredTransactions())
                             {
                                 <tr>
-                                    <td colspan="7">No transactions found.</td>
-                                </tr>
 
+                                    <td><span>@transaction.Title</span></td>
+                                    <td><span>@transaction.Description</span></td>
+                                    <td><span>@transaction.TagName</span></td>
+                                    <td>  <span>@transaction.Date.ToString("yyyy-MM-dd")</span></td>
+                                    <td>    <span>@transaction.Amount</span></td>
+                                    <td>
+                                        <span class="@(transaction.Type == "Debt" ? "text-warning" :
+                                                     transaction.Type == "Expense" ? "text-danger" :
+                                                     transaction.Type == "Income" ? "text-success" : "")">
+                                            @transaction.Type
+                                        </span>
+                                    </td>
+                                    <td> <span>@transaction.Notes</span></td>
+
+                                </tr>
                             }
+
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7">No transactions found.</td>
+                            </tr>
+
+                        }
                         </tbody>
                     </table>
 
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="dashboard-card">
+            <div class="mt-5">
+                <h2><b>Pending Debts</b></h2>
+                <div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+
+                            <th>Title</th>
+                            <th>Amount</th>
+                            <th>Due Date</th>
+                            <th>Source</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if (debts.Any())
+                        {
+                            @foreach (var debt in FilterPendingDebts())
+                            {
+                                <tr>
+
+                                    <td>@debt.Title</td>
+                                    <td>Npr. @debt.Amount</td>
+                                    <td>@debt.DueDate</td>
+                                    <td>@debt.Source</td>
+                                    <td><span class="text-danger">@debt.Status</span> </td>
+                                    <td>
+                                        <form method="post">
+                                            <button type="submit" class="update-button">Clear debt</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7">No Debts found.</td>
+                            </tr>
+                        }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        
+
     </div>
 </div>
 <!--Transaction modal-->
@@ -201,6 +276,7 @@
 
 
 @code {
+    private List<Models.Debt> debts = new();
     private string? ErrorMessage;
     private double[] data = new double[] {};
 
@@ -218,13 +294,15 @@
     private decimal totalExpense;
     private decimal totalDebt;
     private decimal totalBalance;
+   
     private DateTime? startDate;
     private DateTime? endDate;
     private string Source;
     private List<Models.Transaction> transactions = new();
 
     // Transaction list
-
+    private decimal totalRemainingDebt;
+    private decimal totalClearedDebt;
     public List<Tag> GetAllTags()
     {
         // Example of fetching tags from a local source
@@ -253,6 +331,7 @@
     {
         await GetTransactions();
         _tags = GetAllTags(); // Synchronously fetch tags
+        debts = DebtService.GetAllDebts(); 
         CalculateTotals();
     }
 
@@ -263,7 +342,8 @@
         totalExpense = transactions.Where(t => t.Type == "Expense").Sum(t => t.Amount);
         totalDebt = transactions.Where(t => t.Type == "Debt").Sum(t => t.Amount);
         totalBalance = totalIncome + totalDebt - totalExpense;
-
+        totalRemainingDebt = debts.Where(d => d.Status == "Pending").Sum(d => d.Amount);
+        totalClearedDebt = debts.Where(d => d.Status == "Cleared").Sum(d => d.Amount);
         // Convert the totals to a double[] for chart data
         data = new double[] { (double)totalIncome, (double)totalExpense, (double)totalDebt };
     }
@@ -274,6 +354,11 @@
         return transactions.Where(t =>
             (!startDate.HasValue || t.Date >= startDate) &&
             (!endDate.HasValue || t.Date <= endDate));
+    }
+    //Filter debts
+    private IEnumerable<Models.Debt> FilterPendingDebts()
+    {
+        return debts.Where(d => d.Status.Equals("Pending", StringComparison.OrdinalIgnoreCase));
     }
 
     // Open modal
