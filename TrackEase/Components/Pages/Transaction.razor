@@ -52,39 +52,71 @@
         </tr>
         </thead>
         <tbody id="transactionTable">
-            @if (FilteredTransactions().Any())
-            {
-                @foreach (var transaction in FilteredTransactions())
-                {
-                    <tr>
-                        <td>@transaction.Title</td>
-                        <td>@transaction.Description</td>
-                        <td><span>@transaction.TagName</span></td>
-                        <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
-                        <td>@transaction.Amount</td>
-                        <td>
-                            <span class="@(transaction.Type == "Debt" ? "text-warning" :
-                                         transaction.Type == "Expense" ? "text-danger" :
-                                         transaction.Type == "Income" ? "text-success" : "")">
-                                @transaction.Type
-                            </span>
-                        </td>
-                        <td>@transaction.Notes</td>
-                        <td>
-                            <button type="button" class="update-button">Edit</button>
-                        </td>
-                    </tr>
-                }
-            }
-            else
+        @if (FilteredTransactions().Any())
+        {
+            @foreach (var transaction in FilteredTransactions())
             {
                 <tr>
-                    <td colspan="7">No transactions found.</td>
+                    <td>@transaction.Title</td>
+                    <td>@transaction.Description</td>
+                    <td><span>@transaction.TagName</span></td>
+                    <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
+                    <td>@transaction.Amount</td>
+                    <td>
+                        <span class="@(transaction.Type == "Debt" ? "text-warning" :
+                                     transaction.Type == "Expense" ? "text-danger" :
+                                     transaction.Type == "Income" ? "text-success" : "")">
+                            @transaction.Type
+                        </span>
+                    </td>
+                    <td>@transaction.Notes</td>
+                    <td>
+                        <button type="button" class="update-button" @onclick="() => OpenEditPopup(transaction.Id)">Edit</button>
+                    </td>
                 </tr>
             }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7">No transactions found.</td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>
+<!-- Popup Modal -->
+@if (showEditPopup)
+{
+    <div class="modal-overlay">
+        <div class="modal fade show">
+            <div class="modal-dialog custom-modal-width"> <!-- Custom width applied -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Transaction Note</h5>
+                        <button type="button" class="close" @onclick="CloseEditPopup">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="note">Add Note:</label>
+                                <textarea id="note" class="form-control" @bind="note" placeholder="Enter your note here..."></textarea>
+                            </div>
+                            <div class="form-group text-right">
+                                <button type="button" class="btn btn-primary" @onclick="SubmitNote">Submit</button>
+                                <button type="button" class="btn btn-secondary" @onclick="CloseEditPopup">Cancel</button>
+                            </div>
+                            @if (!string.IsNullOrEmpty(errorMessage))
+                            {
+                                <div class="text-danger">@errorMessage</div>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 <!-- Add Custom Tag -->
 <div class="mt-5 flex1">
@@ -141,6 +173,9 @@
 </div>
 
 @code {
+    private bool showEditPopup = false;
+    private int selectedTransactionId;
+    private string note = string.Empty;
     private string selectedType;
     private List<Models.Transaction> transactions = new();
     private List<Tag> tags = new();
@@ -148,7 +183,7 @@
     private string searchTitle;
     private DateTime? startDate;
     private DateTime? endDate;
-
+    private string? errorMessage;
    
     protected override async Task OnInitializedAsync()
     {
@@ -160,6 +195,59 @@
         catch (Exception ex)
         {
             Console.WriteLine($"Error initializing data: {ex.Message}");
+        }
+    }
+    
+    private void OpenEditPopup(int transactionId)
+    {
+        selectedTransactionId = transactionId;
+        var transaction = transactions.FirstOrDefault(t => t.Id == transactionId);
+        note = transaction?.Notes ?? string.Empty;
+        showEditPopup = true;
+    }
+    private void CloseEditPopup()
+    {
+        showEditPopup = false;
+        note = string.Empty;
+        selectedTransactionId = 0;
+        errorMessage = string.Empty;
+    }
+    // Function to submit the note for the selected transaction
+    private async Task SubmitNote()
+    {
+        try
+        {
+            // Find the transaction to update
+            var transactionToUpdate = transactions.FirstOrDefault(t => t.Id == selectedTransactionId);
+            if (transactionToUpdate == null)
+            {
+                // Transaction not found
+                Console.WriteLine("Transaction not found.");
+                return;
+            }
+
+            // Update the Notes field
+            transactionToUpdate.Notes = note;
+
+            // Call the service to update the transaction
+            var updateResult = await TransactionSerive.UpdateTransaction(transactionToUpdate);
+
+            if (updateResult)
+            {
+                // Success: Refresh the transaction list and close the modal
+                Console.WriteLine("Note updated successfully.");
+                transactions = await TransactionSerive.GetAllTransactions();
+                CloseEditPopup();
+            }
+            else
+            {
+                // Failure: Handle appropriately
+                Console.WriteLine("Failed to update the note.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating note: {ex.Message}");
         }
     }
 

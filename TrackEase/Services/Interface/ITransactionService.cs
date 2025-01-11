@@ -8,5 +8,7 @@ public interface ITransactionService
 
     Task<List<Transaction>> GetAllTransactions();
 
-   
+    Task<bool> UpdateTransaction(Transaction updatedTransaction);
+
+
 }

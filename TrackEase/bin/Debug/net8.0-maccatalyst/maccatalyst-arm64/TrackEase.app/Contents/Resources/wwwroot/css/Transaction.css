@@ -90,3 +90,69 @@
     max-width: 450px;
     background-color: #f9f9f9;
 }
+/* Modal overlay for the popup */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050; /* Ensure it's above most elements */
+}
+
+/* Modal container */
+.modal.fade.show {
+    display: block;
+    z-index: 1050; /* Above overlay */
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+    z-index: 1040; /* Below modal content */
+}
+
+/* Modal content styling */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px; /* Add padding for content */
+    background-color: #fff;
+}
+
+/* Custom width for the modal */
+.custom-modal-width {
+    width: 400px; /* Adjust width to your needs */
+    max-width: 90%; /* Ensure responsiveness */
+}
+
+/* Close button styling */
+.modal-header .close {
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Error message styling */
+.text-danger {
+    color: red;
+    margin-top: 10px;
+}
+
+/* Optional: Button styling */
+.update-button {
+    padding: 4px 8px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.update-button:hover {
+    background-color: #0056b3;
+}

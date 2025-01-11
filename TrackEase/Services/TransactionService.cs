@@ -30,7 +30,42 @@ public class TransactionService : BaseService<Transaction>, ITransactionService
         
     }
 
-    // Simulated Register New Users logic
+    public async Task<bool> UpdateTransaction(Transaction updatedTransaction)
+    {
+        try
+        {
+            // Find the transaction by ID
+            var transaction = _transactions.FirstOrDefault(t => t.Id == updatedTransaction.Id);
+
+            if (transaction == null)
+            {
+                // Transaction not found
+                Console.WriteLine($"Transaction with ID {updatedTransaction.Id} not found.");
+                return false;
+            }
+
+            // Update the transaction fields
+            transaction.Title = updatedTransaction.Title;
+            transaction.Description = updatedTransaction.Description;
+            transaction.TagName = updatedTransaction.TagName;
+            transaction.Date = updatedTransaction.Date;
+            transaction.Amount = updatedTransaction.Amount;
+            transaction.Type = updatedTransaction.Type;
+            transaction.Notes = updatedTransaction.Notes;
+
+            // Simulate saving to a database or file system (you can replace this with actual save logic)
+           SaveAll(_transactions, AppTransactionsFilePath);
+
+            Console.WriteLine($"Transaction with ID {updatedTransaction.Id} updated successfully.");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            // Log the error and return false to indicate failure
+            Console.WriteLine($"Error updating transaction: {ex.Message}");
+            return false;
+        }
+    }
     public async Task<bool> addTransaction(Transaction transaction)
     {
         try
