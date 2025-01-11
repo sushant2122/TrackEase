@@ -6,5 +6,5 @@ public interface IDebtService
 {
     Task<bool> addDebt(Debt debt);
 
-    Task<List<Debt>> GetAllDebts();
+    List<Debt> GetAllDebts();
 }

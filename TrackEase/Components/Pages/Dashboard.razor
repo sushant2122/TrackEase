@@ -170,6 +170,14 @@
                             <label>Due Date</label>
                             <input type="date" class="form-control" @bind="newDebt.DueDate" />
                         </div>
+                        <div class="mb-3">
+                            <label>Source</label>
+                            <select class="form-control" @bind="Source">
+                                <option value="KumariBank">Kumari Bank LTD.</option>
+                                <option value="NicAsiaBank">Nic Asia Bank LTB.</option>
+                                <option value="EverestBank">Everest Bank LTD.</option>
+                            </select>
+                        </div>
                     }
                     <div class="mb-3">
                         <label>Notes</label>
@@ -212,6 +220,7 @@
     private decimal totalBalance;
     private DateTime? startDate;
     private DateTime? endDate;
+    private string Source;
     private List<Models.Transaction> transactions = new();
 
     // Transaction list
@@ -283,47 +292,73 @@
     
     
     // Add transaction
-    private async Task AddTransaction()
+ // Add transaction
+private async Task AddTransaction()
+{
+    try
     {
-        try
+        // Validate if the transaction is an "Expense" and check for sufficient funds
+        if (newTransaction.Type == "Expense")
         {
-            // Check if the transaction type is "Expenses"
-            if (newTransaction.Type == "Expense")
-            {
-                var totalIncome = totalBalance;
+            var totalIncome = totalBalance;
 
-                // Validate if the expense exceeds the income
-              
-                if (totalIncome < newTransaction.Amount)
-                {
-                    // Display an error message and exit the method
-                    Console.WriteLine("Error: Insufficient funds. The transaction could not be saved.");
-                    ErrorMessage = "Insufficient amount";
-                    return; // Prevent further execution
-                }
-            }
-
-            // Add the transaction using the service
-            var result = await TransactionSerive.addTransaction(newTransaction);
-
-            if (result)
+            if (totalIncome < newTransaction.Amount)
             {
-                Console.WriteLine("Transaction added successfully!");
-                newTransaction = new Models.Transaction(); // Reset the form
-                await GetTransactions(); // Refresh transactions
-                CalculateTotals(); // Recalculate totals
-                CloseModal(); // Close the modal
-            }
-            else
-            {
-                Console.WriteLine("Failed to add the transaction. Please check the details.");
+                ErrorMessage = "Insufficient amount";
+                return; // Prevent further execution
             }
         }
-        catch (Exception ex)
+
+        // If the transaction type is "Debt"
+        if (newTransaction.Type == "Debt")
         {
-            Console.WriteLine($"Error adding transaction: {ex.Message}");
+            // Check if Source is null or empty before proceeding
+            if (string.IsNullOrEmpty(Source))
+            {
+                ErrorMessage = "Please select a debt source.";
+               
+                return;
+            }
+
+            // Populate the newDebt object with shared and specific attributes
+            newDebt.Title = newTransaction.Title;
+            newDebt.Amount = newTransaction.Amount;
+            newDebt.Source = Source;
+            newDebt.Status = "Pending"; // Default status for new debts
+
+            // Call the DebtService to add the new debt
+            var debtResult = await DebtService.addDebt(newDebt);
+
+            if (!debtResult)
+            {
+                ErrorMessage = "Failed to add the debt.";
+                return;
+            }
+        }
+
+        // Add the transaction using the service
+        var transactionResult = await TransactionSerive.addTransaction(newTransaction);
+
+        if (transactionResult)
+        {
+            // Success handling
+            Console.WriteLine("Transaction added successfully!");
+            newTransaction = new Models.Transaction(); // Reset the form
+            newDebt = new Models.Debt(); // Reset the debt form
+            await GetTransactions(); // Refresh transactions
+            CalculateTotals(); // Recalculate totals
+            CloseModal(); // Close the modal
+        }
+        else
+        {
+            ErrorMessage = "Failed to add the transaction. Please check the details.";
         }
     }
-
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error adding transaction: {ex.Message}");
+        ErrorMessage = "An unexpected error occurred.";
+    }
+}
 
 }

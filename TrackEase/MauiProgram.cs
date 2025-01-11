@@ -28,6 +28,7 @@ namespace TrackEase
             builder.Services.AddScoped<IUserService,UserService>();
             builder.Services.AddScoped<ITransactionService, TransactionService>();
             builder.Services.AddScoped<ITagService, TagService>();
+            builder.Services.AddScoped<IDebtService, DebtService>();
             builder.Services.AddScoped<GlobalState>();
 
 

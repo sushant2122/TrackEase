@@ -52,70 +52,52 @@
                     <th>Title</th>
                     <th>Amount</th>
                     <th>Due Date</th>
-                    <th>Tag</th>
+                    <th>Cleared Date</th>
                     <th>Source</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
+            @if (debts.Any())
+            {
+                @foreach (var debt in debts)
+                {
+                    <tr>
+                        <td>@debt.Id</td>
+                        <td>@debt.Title</td>
+                        <td>Npr. @debt.Amount</td>
+                        <td>@debt.DueDate</td>
+                        <td>cleared date</td>
+                        <td>@debt.Source</td>
+                        <td>@debt.Status</td>
+                    </tr>
+                }
+            }  else
+            {
                 <tr>
-                    <td>1</td>
-                    <td>Groceries</td>
-                    <td>Npr. 2,300</td>
-                    <td>2024/04/30</td>
-                    <td>Debt</td>
-                    <td>Kumari Bank</td>
-                    <td>pending</td>
+                    <td colspan="7">No Debts found.</td>
                 </tr>
+            }
+
+           
             </tbody>
         </table>
     </div>
 </div>
+@code
+{
+    private List<Models.Debt> debts = new();
 
-<!-- Deposit Popup Form -->
-<div class="popup-container" id="depositPopup" style="display: none;">
-    <div class="popup">
-        <button class="close-btn" onclick="closePopup()">×</button>
-        <h3><b>Deposit</b></h3>
-        <form id="depositForm">
-            <div class="form-group">
-                <label for="depositTitle"><b>Title</b></label>
-                <input type="text" class="form-control" id="depositTitle" placeholder="Enter deposit title" required>
-            </div>
-            <div class="form-group">
-                <label for="depositTag"><b>Tag</b></label>
-                <select class="form-control" id="depositTag" required>
-                    <option value="">Select Tag</option>
-                    <option value="Salary">Salary</option>
-                    <option value="Bonus">Bonus</option>
-                    <option value="Gift">Gift</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="depositAmount"><b>Amount</b></label>
-                <input type="number" class="form-control" id="depositAmount" placeholder="Enter amount" required>
-            </div>
-            <div class="form-group">
-                <label for="depositNotes"><b>Notes</b></label>
-                <textarea class="form-control" id="depositNotes" placeholder="Enter any notes" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Deposit</button>
-        </form>
-    </div>
-</div>
-
-<script>
-    // Function to open the popup
-    function openPopup() {
-        document.getElementById("depositPopup").style.display = "flex";
+    protected override void OnInitialized()
+    {
+        try
+        {
+            debts = DebtService.GetAllDebts(); 
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error initializing data: {ex.Message}");
+        }
     }
 
-    // Function to close the popup
-    function closePopup() {
-        document.getElementById("depositPopup").style.display = "none";
-    }
-</script>
-
-@code {
-    // Add your C# code here if needed
 }

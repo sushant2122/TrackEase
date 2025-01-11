@@ -10,11 +10,11 @@ public class Debt
     
     public string Source { get; set; }
 
-    public decimal Amount { get; set; }
+    public decimal Amount { get; set; } 
 
-    public DateOnly DueDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+    public DateOnly DueDate { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(30));
 
     public DateOnly? ClearedDate { get; set; }
     
-    public  string Status { get; set; }
+    public  string Status { get; set; } = "Pending";
 }

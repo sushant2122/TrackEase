@@ -57,7 +57,7 @@
                 @foreach (var transaction in FilteredTransactions())
                 {
                     <tr>
-                        <td>@transaction.Title,@transaction.Id</td>
+                        <td>@transaction.Title</td>
                         <td>@transaction.Description</td>
                         <td><span>@transaction.TagName</span></td>
                         <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
@@ -116,7 +116,7 @@
                 @foreach (var tag in tags)
                 {
                     <tr>
-                        <td>@tag.TagName,@tag.Id</td>
+                        <td>@tag.TagName</td>
                         <td>@tag.TagType</td>
                     </tr>
                 }
