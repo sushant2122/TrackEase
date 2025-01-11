@@ -40,6 +40,7 @@ public class DebtService : BaseService<Debt>, IDebtService
             {
                 Id = _debts.Any() ? _debts.Max(t => t.Id) + 1 : 1, // Assign a unique Id
                 Title = debt.Title,
+                Source = debt.Source,
                 Amount = debt.Amount,
                 DueDate = debt.DueDate,
                 ClearedDate = debt.ClearedDate,

@@ -16,27 +16,37 @@
                     <th>Title</th>
                     <th>Amount</th>
                     <th>Due Date</th>
-                    <th>Tag</th>
                     <th>Source</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
+            @if (debts.Any())
+            {
+                @foreach (var debt in FilterPendingDebts())
+                {
+                    <tr>
+                        <td>@debt.Id</td>
+                        <td>@debt.Title</td>
+                        <td>Npr. @debt.Amount</td>
+                        <td>@debt.DueDate</td>
+                        <td>@debt.Source</td>
+                        <td>@debt.Status</td>
+                        <td>
+                            <form method="post" >
+                                <button type="submit" class="update-button">Clear debt</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }  else
+            {
                 <tr>
-                    <td>1</td>
-                    <td>Groceries</td>
-                    <td>Npr. 2,300</td>
-                    <td>2024/04/30</td>
-                    <td>Debt</td>
-                    <td>Kumari Bank</td>
-                    <td>pending</td>
-                    <td>
-                        <form method="post" onsubmit="handleSubmit(event)">
-                            <button type="submit" class="update-button">Clear debt</button>
-                        </form>
-                    </td>
+                    <td colspan="7">No Debts found.</td>
                 </tr>
+            }
+           
             </tbody>
         </table>
     </div>
@@ -60,16 +70,16 @@
             <tbody>
             @if (debts.Any())
             {
-                @foreach (var debt in debts)
+                @foreach (var debt in FilterClearedDebts())
                 {
                     <tr>
                         <td>@debt.Id</td>
                         <td>@debt.Title</td>
                         <td>Npr. @debt.Amount</td>
                         <td>@debt.DueDate</td>
-                        <td>cleared date</td>
+                        <td>@debt.ClearedDate</td>
                         <td>@debt.Source</td>
-                        <td>@debt.Status</td>
+                        <td><span class="text-success"> @debt.Status</span></td>
                     </tr>
                 }
             }  else
@@ -98,6 +108,16 @@
         {
             Console.WriteLine($"Error initializing data: {ex.Message}");
         }
+    }
+    
+    private IEnumerable<Models.Debt> FilterPendingDebts()
+    {
+        return debts.Where(d => d.Status.Equals("Pending", StringComparison.OrdinalIgnoreCase));
+    }
+    
+    private IEnumerable<Models.Debt> FilterClearedDebts()
+    {
+        return debts.Where(d => d.Status.Equals("Cleared", StringComparison.OrdinalIgnoreCase));
     }
 
 }
