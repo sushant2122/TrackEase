@@ -3,11 +3,10 @@
 @inject NavigationManager Navigation
 
 <div class="page">
-
     @if (GlobalState.CurrentUser != null)
     {
         <div class="sidebar">
-            <NavMenu/>
+            <NavMenu />
         </div>
     }
 
@@ -18,20 +17,17 @@
     </main>
 </div>
 
-@* Required *@
+
 <MudThemeProvider />
 <MudPopoverProvider />
-
-@* Needed for dialogs *@
 <MudDialogProvider />
-
 
 @code {
     private GlobalState _globalState = new();
+
     private void LogoutHandler()
     {
-            Navigation.NavigateTo("/login");
-      
-            GlobalState.CurrentUser = null; 
+        Navigation.NavigateTo("/login");
+        GlobalState.CurrentUser = null;
     }
 }

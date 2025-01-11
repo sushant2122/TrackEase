@@ -9,15 +9,15 @@
     <div>
         <table class="table">
             <thead>
-                <tr>
-                    <th>S.N</th>
-                    <th>Title</th>
-                    <th>Amount</th>
-                    <th>Due Date</th>
-                    <th>Cleared Date</th>
-                    <th>Source</th>
-                    <th>Status</th>
-                </tr>
+            <tr>
+                <th>S.N</th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Due Date</th>
+                <th>Cleared Date</th>
+                <th>Source</th>
+                <th>Status</th>
+            </tr>
             </thead>
             <tbody>
             @if (debts.Any())
@@ -36,21 +36,20 @@
                                 @debt.Status
                             </span>
                         </td>
-
                     </tr>
                 }
-            }  else
+            }
+            else
             {
                 <tr>
                     <td colspan="7">No Debts found.</td>
                 </tr>
             }
-
-           
             </tbody>
         </table>
     </div>
 </div>
+
 @code
 {
     private List<Models.Debt> debts = new();
@@ -63,10 +62,6 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error initializing data: {ex.Message}");
         }
     }
-    
-  
-
 }

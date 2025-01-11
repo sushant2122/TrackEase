@@ -1,73 +1,75 @@
 ﻿@page "/login"
 
-
 <head>
-	<link rel="stylesheet" href="css/Login.css" />
+    <link rel="stylesheet" href="css/Login.css" />
 </head>
 
 <div class="popup-container">
-	<div class="popup">
-		<h3><b>Login</b></h3>
-		<form @onsubmit="HandleLoginAsync">
-			<div class="form-group">
-				<label for="username1"><b>Username</b></label>
-				<input type="text" class="form-control" @bind="Users.Username" id="username1" placeholder="Enter username">
-			</div>
-			<div class="form-group">
-				<label for="Password1"><b>Password</b></label>
-				<input type="password" class="form-control" @bind="Users.Password" id="Password1" placeholder="Password">
-			</div>
-			<div class="form-group">
-				<label for="Currency1"><b>Select Currency</b></label>
-				<select class="form-control" id="Currency1" @bind="Pref_currency">
-					<option value=""></option>
-					<option value="रु">Npr</option>
-					<option value="£">Pound</option>
-					<option value="¥">Yuan</option>
-					<option value="$">Cad</option>
-				</select>
-			</div>
-		
-			<button type="submit" class="btn btn-primary">Login</button>
-		</form>
-	</div>
+    <div class="popup">
+        <h3><b>Login</b></h3>
+        <form @onsubmit="HandleLoginAsync">
+            <div class="form-group">
+                <label for="username1"><b>Username</b></label>
+                <input type="text" class="form-control" @bind="Users.Username" id="username1" placeholder="Enter username" required />
+            </div>
+            <div class="form-group">
+                <label for="Password1"><b>Password</b></label>
+                <input type="password" class="form-control" @bind="Users.Password" id="Password1" placeholder="Password" required />
+            </div>
+            <div class="form-group">
+                <label for="Currency1"><b>Select Currency</b></label>
+                <select class="form-control" id="Currency1" @bind="Pref_currency" required>
+                    <option value="" disabled>Select Currency</option>
+                    <option value="रु">Npr</option>
+                    <option value="£">Pound</option>
+                    <option value="¥">Yuan</option>
+                    <option value="$">Cad</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
 </div>
 
 @if (!string.IsNullOrEmpty(ErrorMessage))
 {
-	<div class="alert alert-danger">@ErrorMessage</div>
+    <div class="alert alert-danger">@ErrorMessage</div>
 }
 
 @code {
+    public Models.User Users { get; set; } = new();
+    private string? ErrorMessage;
+    private string? Pref_currency;
 
+    private async Task HandleLoginAsync()
+    {
+        // Basic validation for the required fields
+        if (string.IsNullOrEmpty(Users.Username) || string.IsNullOrEmpty(Users.Password))
+        {
+            ErrorMessage = "Username and password cannot be empty.";
+            return;
+        }
 
-	public Models.User Users { get; set; } = new();
-	private string? ErrorMessage;
-	private string? Pref_currency;
-	private async Task HandleLoginAsync()
-	{
-		// Check if the currency is selected
-		if (string.IsNullOrEmpty(Pref_currency))
-		{
-			ErrorMessage = "Please select a currency.";
-			return;
-		}
+        if (string.IsNullOrEmpty(Pref_currency))
+        {
+            ErrorMessage = "Please select a currency.";
+            return;
+        }
 
-		var loggedInUser = await UserService.Login(Users);
+        // Attempt login
+        var loggedInUser = await UserService.Login(Users);
 
-		if (loggedInUser != null)
-		{
-			// Successfully logged in, redirect to dashboard
-			GlobalState.CurrentUser = loggedInUser;
-			GlobalState.CurrentUser.Pref_currency = Pref_currency;
+        if (loggedInUser != null)
+        {
+            GlobalState.CurrentUser = loggedInUser;
+            GlobalState.CurrentUser.Pref_currency = Pref_currency;
 
-			Nav.NavigateTo("/dashboard");
-		}
-		else
-		{
-			// Invalid login attempt
-			ErrorMessage = "Invalid username or password.";
-		}
-	}
-
+            // Redirect to dashboard
+            Nav.NavigateTo("/dashboard");
+        }
+        else
+        {
+            ErrorMessage = "Invalid username or password.";
+        }
+    }
 }

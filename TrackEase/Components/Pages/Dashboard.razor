@@ -1,20 +1,13 @@
 ﻿@page "/dashboard"
-@using Microcharts
-@inject GlobalState _globalstate;
-@using SkiaSharp
 @using MudBlazor
-@using TrackEase.Models
 <head>
     <link rel="stylesheet" href="css/Dashboard.css" />
 </head>
 
 <div class="container mt-4">
-
-
     <!-- Cards for Totals -->
-    <h3>Welcome, @GlobalState.CurrentUser?.Username  </h3>
+    <h3>Welcome, @GlobalState.CurrentUser?.Username</h3>
     <div class="row">
-        
         <div class="col-md-4">
             <div class="dashboard-card bg-primary text-white text-center">
                 <h5>Total Balance</h5>
@@ -48,7 +41,7 @@
         </div>
 
         <div class="col-md-4">
-            <div class="dashboard-card bg-success  text-white text-center">
+            <div class="dashboard-card bg-success text-white text-center">
                 <h5>Cleared Debt</h5>
                 <h2>@GlobalState.CurrentUser?.Pref_currency @totalClearedDebt</h2>
             </div>
@@ -65,11 +58,7 @@
         <div class="col-md-6">
             <div class="dashboard-card">
                 <h5>Financial Overview</h5>
-                <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px"
-                          InputData="@data"
-                          InputLabels="@labels"
-                />
-
+                <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px" InputData="@data" InputLabels="@labels" />
             </div>
         </div>
         <div class="col-md-6">
@@ -85,57 +74,49 @@
                 <div class="transaction-list">
                     <table class="table">
                         <thead>
-                        <tr>
-
-                            <th>Title</th>
-                    
-                            <th>Tag</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Type</th>
-                            <th>Notes</th>
-                        </tr>
-
+                            <tr>
+                                <th>Title</th>
+                                <th>Tag</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                                <th>Notes</th>
+                            </tr>
                         </thead>
                         <tbody id="transactionTable">
-                        @if (transactions.Any())
-                        {
-                            @foreach (var transaction in FilteredTransactions())
+                            @if (transactions.Any())
+                            {
+                                @foreach (var transaction in FilteredTransactions())
+                                {
+                                    <tr>
+                                        <td><span>@transaction.Title</span></td>
+                                        <td><span>@transaction.TagName</span></td>
+                                        <td><span>@transaction.Date.ToString("yyyy-MM-dd")</span></td>
+                                        <td><span>@GlobalState.CurrentUser?.Pref_currency @transaction.Amount</span></td>
+                                        <td>
+                                            <span class="@(transaction.Type == "Debt" ? "text-warning" :
+                                                         transaction.Type == "Expense" ? "text-danger" :
+                                                         transaction.Type == "Income" ? "text-success" : "")">
+                                                @transaction.Type
+                                            </span>
+                                        </td>
+                                        <td><span>@transaction.Notes</span></td>
+                                    </tr>
+                                }
+                            }
+                            else
                             {
                                 <tr>
-
-                                    <td><span>@transaction.Title</span></td>
-                              
-                                    <td><span>@transaction.TagName</span></td>
-                                    <td>  <span>@transaction.Date.ToString("yyyy-MM-dd")</span></td>
-                                    <td>    <span>@GlobalState.CurrentUser?.Pref_currency @transaction.Amount</span></td>
-                                    <td>
-                                        <span class="@(transaction.Type == "Debt" ? "text-warning" :
-                                                     transaction.Type == "Expense" ? "text-danger" :
-                                                     transaction.Type == "Income" ? "text-success" : "")">
-                                            @transaction.Type
-                                        </span>
-                                    </td>
-                                    <td> <span>@transaction.Notes</span></td>
-
+                                    <td colspan="7">No transactions found.</td>
                                 </tr>
                             }
-
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="7">No transactions found.</td>
-                            </tr>
-
-                        }
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="dashboard-card">
             <div class="mt-5">
@@ -143,53 +124,48 @@
                 <div>
                     <table class="table">
                         <thead>
-                        <tr>
-
-                            <th>Title</th>
-                            <th>Amount</th>
-                            <th>Due Date</th>
-                            <th>Source</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>Title</th>
+                                <th>Amount</th>
+                                <th>Due Date</th>
+                                <th>Source</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @if (debts.Any())
-                        {
-                            @foreach (var debt in FilterPendingDebts())
+                            @if (debts.Any())
+                            {
+                                @foreach (var debt in FilterPendingDebts())
+                                {
+                                    <tr>
+                                        <td>@debt.Title</td>
+                                        <td>@GlobalState.CurrentUser?.Pref_currency @debt.Amount</td>
+                                        <td>@debt.DueDate</td>
+                                        <td>@debt.Source</td>
+                                        <td><span class="text-danger">@debt.Status</span></td>
+                                        <td>
+                                            @if (debt.Status != "Cleared")
+                                            {
+                                                <button class="update-button" @onclick="() => ClearDebt(debt.Id)">Clear debt</button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
                             {
                                 <tr>
-                                    <td>@debt.Title</td>
-                                    <td>@GlobalState.CurrentUser?.Pref_currency  @debt.Amount</td>
-                                    <td>@debt.DueDate</td>
-                                    <td>@debt.Source</td>
-                                    <td><span class="text-danger">@debt.Status</span></td>
-                                    <td>
-                                        @if (debt.Status != "Cleared")
-                                        {
-                                            <button class="update-button" @onclick="() => ClearDebt(debt.Id)">Clear debt</button>
-                                        }
-                                    </td>
+                                    <td colspan="7">No Debts found.</td>
                                 </tr>
-
                             }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="7">No Debts found.</td>
-                            </tr>
-                        }
-
                         </tbody>
                     </table>
                 </div>
             </div>
-            
-            
         </div>
-        
     </div>
+
     <div class="row">
         <div class="dashboard-card">
             <h2><b>Highest Lowest Transactions</b></h2>
@@ -221,58 +197,49 @@
                 <div class="transaction-list">
                     <table class="table">
                         <thead>
-                        <tr>
-
-                            <th>Title</th>
-                  
-                            <th>Tag</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Type</th>
-                            <th>Notes</th>
-                        </tr>
-
+                            <tr>
+                                <th>Title</th>
+                                <th>Tag</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                                <th>Notes</th>
+                            </tr>
                         </thead>
                         <tbody id="transactionTable">
-                        @if (transactions.Any())
-                        {
-                            @foreach (var transaction in FilteredSortTransactions())
+                            @if (transactions.Any())
+                            {
+                                @foreach (var transaction in FilteredSortTransactions())
+                                {
+                                    <tr>
+                                        <td><span>@transaction.Title</span></td>
+                                        <td><span>@transaction.TagName</span></td>
+                                        <td><span>@transaction.Date.ToString("yyyy-MM-dd")</span></td>
+                                        <td><span>@GlobalState.CurrentUser?.Pref_currency @transaction.Amount</span></td>
+                                        <td>
+                                            <span class="@(transaction.Type == "Debt" ? "text-warning" :
+                                                         transaction.Type == "Expense" ? "text-danger" :
+                                                         transaction.Type == "Income" ? "text-success" : "")">
+                                                @transaction.Type
+                                            </span>
+                                        </td>
+                                        <td><span>@transaction.Notes</span></td>
+                                    </tr>
+                                }
+                            }
+                            else
                             {
                                 <tr>
-
-                                    <td><span>@transaction.Title</span></td>
-                             
-                                    <td><span>@transaction.TagName</span></td>
-                                    <td>  <span>@transaction.Date.ToString("yyyy-MM-dd")</span></td>
-                                    <td>    <span>@GlobalState.CurrentUser?.Pref_currency @transaction.Amount</span></td>
-                                    <td>
-                                        <span class="@(transaction.Type == "Debt" ? "text-warning" :
-                                                     transaction.Type == "Expense" ? "text-danger" :
-                                                     transaction.Type == "Income" ? "text-success" : "")">
-                                            @transaction.Type
-                                        </span>
-                                    </td>
-                                    <td> <span>@transaction.Notes</span></td>
-
+                                    <td colspan="7">No transactions found.</td>
                                 </tr>
                             }
-
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="7">No transactions found.</td>
-                            </tr>
-
-                        }
                         </tbody>
                     </table>
-
                 </div>
-
             </div>
         </div>
     </div>
+
     @if (showErrorModal)
     {
         <div class="modal-overlay">
@@ -291,8 +258,8 @@
         </div>
     }
 
-
 </div>
+
 <!--Transaction modal-->
 @if (showModal)
 {
@@ -311,6 +278,7 @@
                     <div class="mb-3">
                         <label>Tags</label>
                         <select class="form-control" @bind="newTransaction.TagName">
+                            <option value=""></option>
                             @if (_tags.Any())
                             {
                                 @foreach (var tag in _tags)
@@ -347,9 +315,10 @@
                         <div class="mb-3">
                             <label>Source</label>
                             <select class="form-control" @bind="Source">
-                                <option value="KumariBank">Kumari Bank LTD.</option>
-                                <option value="NicAsiaBank">Nic Asia Bank LTB.</option>
-                                <option value="EverestBank">Everest Bank LTD.</option>
+                                <option value=""></option>
+                                <option value="Kumari Bank">Kumari Bank LTD.</option>
+                                <option value="Nic Asia Bank">Nic Asia Bank LTB.</option>
+                                <option value="Everest Bank">Everest Bank LTD.</option>
                             </select>
                         </div>
                     }
@@ -366,25 +335,18 @@
                     <button type="button" class="btn btn-secondary" @onclick="CloseModal">Close</button>
                     <button type="button" class="btn btn-primary" @onclick="AddTransaction">Add</button>
                 </div>
-
-                
             </div>
         </div>
     </div>
 }
 
-
 @code {
     private List<Models.Debt> debts = new();
     private string? ErrorMessage;
     private double[] data = new double[] {};
-
-    // Labels for the chart
+  
     private string[] labels = new string[] { "Income", "Expense", "Debt" };
 
- 
-
-    // Fields
     private string selectedType;
     private string selectedSort;
     private Models.Transaction newTransaction = new();
@@ -401,23 +363,23 @@
     private string Source;
     private List<Models.Transaction> transactions = new();
 
-    // Transaction list
     private decimal totalRemainingDebt;
     private decimal totalClearedDebt;
+
     public List<Tag> GetAllTags()
     {
-        // Example of fetching tags from a local source
         if (_tags == null || !_tags.Any())
         {
-            _tags = TagService.GetAllTags(); // Ensure this is a synchronous call
+            _tags = TagService.GetAllTags(); 
         }
         return _tags;
     }
+
     private async Task<List<Models.Transaction>> GetTransactions()
     {
         try
         {
-            transactions = await TransactionSerive.GetAllTransactions();
+            transactions = await TransactionService.GetAllTransactions();
             return transactions;
         }
         catch (Exception ex)
@@ -426,17 +388,14 @@
         }
     }
 
-
-    // Initialize totals - Ensure this method is non-static
     protected override async Task OnInitializedAsync()
     {
         await GetTransactions();
-        _tags = GetAllTags(); // Synchronously fetch tags
+        _tags = GetAllTags();
         debts = DebtService.GetAllDebts(); 
         CalculateTotals();
     }
 
-    // Calculate totals
     private void CalculateTotals()
     {
         totalIncome = transactions.Where(t => t.Type == "Income").Sum(t => t.Amount);
@@ -449,22 +408,20 @@
         data = new double[] { (double)totalIncome, (double)totalExpense, (double)totalDebt };
     }
 
-    // Filter transactions
     private IEnumerable<Models.Transaction> FilteredTransactions()
     {
         return transactions.Where(t =>
             (!startDate.HasValue || t.Date >= startDate) &&
             (!endDate.HasValue || t.Date <= endDate));
     }
-    //Filter debts
+
     private IEnumerable<Models.Debt> FilterPendingDebts()
     {
         return debts.Where(d => d.Status.Equals("Pending", StringComparison.OrdinalIgnoreCase));
     }
-    //filtered transaction for highestlowest
+
     private IEnumerable<Models.Transaction> FilteredSortTransactions()
     {
-        // Filter by type (Income, Expense, or Debt)
         var filteredTransactions = transactions.AsEnumerable();
 
         if (!string.IsNullOrEmpty(selectedType))
@@ -472,178 +429,149 @@
             filteredTransactions = filteredTransactions.Where(t => t.Type.Equals(selectedType, StringComparison.OrdinalIgnoreCase));
         }
 
-        // Sort based on selected sort type (Highest or Lowest)
         if (selectedSort == "Highest")
         {
             filteredTransactions = filteredTransactions
-                .OrderByDescending(t => t.Amount) // Sort by amount in descending order (Highest)
-                .Take(3); // Get top 3 highest transactions
+                .OrderByDescending(t => t.Amount) 
+                .Take(3); 
         }
         else if (selectedSort == "Lowest")
         {
             filteredTransactions = filteredTransactions
-                .OrderBy(t => t.Amount) // Sort by amount in ascending order (Lowest)
-                .Take(3); // Get top 3 lowest transactions
+                .OrderBy(t => t.Amount) 
+                .Take(3); 
         }
 
         return filteredTransactions;
     }
 
-
-    // Open modal
     private void OpenModal()
     {
         newTransaction = new Models.Transaction { Date = DateTime.Now };
         if (_tags == null || !_tags.Any())
         {
-            _tags = GetAllTags(); // Ensure tags are populated
+            _tags = GetAllTags(); 
         }
         showModal = true;
     }
 
-    // Close modal
     private void CloseModal() => showModal = false;
-    
-    
-    // Add transaction
-private async Task AddTransaction()
-{
-    try
+
+    private async Task AddTransaction()
     {
-        // Validate that the transaction type is not null or empty
-        if (string.IsNullOrEmpty(newTransaction.Type))
+        try
         {
-            ErrorMessage = "Transaction type cannot be empty. Please select a type.";
-            return; // Stop execution if the type is invalid
-        }
-
-        // Validate that the title is not null or empty
-        if (string.IsNullOrEmpty(newTransaction.Title))
-        {
-            ErrorMessage = "Transaction title cannot be empty.";
-            return; // Stop execution if the title is invalid
-        }
-
-        // Validate that the amount is not null, empty, or invalid
-        if (newTransaction.Amount <= 0)
-        {
-            ErrorMessage = "Amount must be greater than zero.";
-            return; // Stop execution if the amount is invalid
-        }
-
-        // Validate if the transaction is an "Expense" and check for sufficient funds
-        if (newTransaction.Type == "Expense")
-        {
-            if (totalBalance < newTransaction.Amount)
+            if (string.IsNullOrEmpty(newTransaction.Type))
             {
-                ErrorMessage = "Insufficient amount.";
-                return; // Prevent further execution
-            }
-        }
-
-        // If the transaction type is "Debt"
-        if (newTransaction.Type == "Debt")
-        {
-            // Check if Source is null or empty before proceeding
-            if (string.IsNullOrEmpty(Source))
-            {
-                ErrorMessage = "Please select a debt source.";
+                ErrorMessage = "Transaction type cannot be empty. Please select a type.";
                 return;
             }
 
-            // Populate the newDebt object with shared and specific attributes
-            newDebt.Title = newTransaction.Title;
-            newDebt.Amount = newTransaction.Amount;
-            newDebt.Source = Source;
-            newDebt.Status = "Pending"; // Default status for new debts
-
-            // Call the DebtService to add the new debt
-            var debtResult = await DebtService.addDebt(newDebt);
-
-            if (!debtResult)
+            if (string.IsNullOrEmpty(newTransaction.Title))
             {
-                ErrorMessage = "Failed to add the debt.";
+                ErrorMessage = "Transaction title cannot be empty.";
+                return; 
+            }
+            if (string.IsNullOrEmpty(newTransaction.TagName))
+            {
+                ErrorMessage = "Transaction tag cannot be empty. Please select a tag.";
+                return; 
+            }
+
+            if (newTransaction.Amount <= 0)
+            {
+                ErrorMessage = "Amount must be greater than zero.";
                 return;
             }
+
+            if (newTransaction.Type == "Expense")
+            {
+                if (totalBalance < newTransaction.Amount)
+                {
+                    ErrorMessage = "Insufficient amount.";
+                    return; 
+                }
+            }
+
+            if (newTransaction.Type == "Debt")
+            {
+                if (string.IsNullOrEmpty(Source))
+                {
+                    ErrorMessage = "Please select a debt source.";
+                    return;
+                }
+
+                newDebt.Title = newTransaction.Title;
+                newDebt.Amount = newTransaction.Amount;
+                newDebt.Source = Source;
+                newDebt.Status = "Pending"; 
+
+                var debtResult = await DebtService.addDebt(newDebt);
+
+                if (!debtResult)
+                {
+                    ErrorMessage = "Failed to add the debt.";
+                    return;
+                }
+            }
+
+            var transactionResult = await TransactionService.addTransaction(newTransaction);
+
+            if (transactionResult)
+            {
+                newTransaction = new Models.Transaction(); 
+                newDebt = new Models.Debt(); 
+                await GetTransactions(); 
+                CalculateTotals(); 
+                CloseModal(); 
+            }
+            else
+            {
+                ErrorMessage = "Failed to add the transaction. Please check the details.";
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = "An unexpected error occurred.";
+        }
+    }
+
+    private bool showErrorModal = false;
+    private string errorMessage = string.Empty;
+
+    private async Task ClearDebt(int debtId)
+    {
+        var debt = DebtService.GetAllDebts().FirstOrDefault(d => d.Id == debtId);
+        if (debt == null)
+        {
+            return;
         }
 
-        // Add the transaction using the service
-        var transactionResult = await TransactionSerive.addTransaction(newTransaction);
+        decimal totalBalance = this.totalBalance; 
 
-        if (transactionResult)
+        if (totalBalance < debt.Amount)
         {
-            // Success handling
-            Console.WriteLine("Transaction added successfully!");
-            newTransaction = new Models.Transaction(); // Reset the form
-            newDebt = new Models.Debt(); // Reset the debt form
-            await GetTransactions(); // Refresh transactions
-            CalculateTotals(); // Recalculate totals
-            CloseModal(); // Close the modal
+            errorMessage = "Insufficient balance to clear the debt.";
+            showErrorModal = true;  
+            return;
+        }
+
+        var success = await DebtService.ClearDebt(debtId);
+
+        if (success)
+        {
+            debts = DebtService.GetAllDebts();
+            CalculateTotals(); 
         }
         else
         {
-            ErrorMessage = "Failed to add the transaction. Please check the details.";
+            errorMessage = "Failed to clear the debt. Please try again.";
+            showErrorModal = true;  
         }
     }
-    catch (Exception ex)
+
+    private void CloseErrorModal()
     {
-        Console.WriteLine($"Error adding transaction: {ex.Message}");
-        ErrorMessage = "An unexpected error occurred.";
+        showErrorModal = false;
     }
-}
-
-private bool showErrorModal = false;
-private string errorMessage = string.Empty;
-private async Task ClearDebt(int debtId)
-{
-    // Retrieve the debt by its ID
-    var debt = DebtService.GetAllDebts().FirstOrDefault(d => d.Id == debtId);
-    if (debt == null)
-    {
-        Console.WriteLine("Debt not found.");
-        return;
-    }
-
-    // Ensure totalBalance is updated correctly
-    decimal totalBalance = this.totalBalance; // This should reflect the current total balance
-
-    
-
-    // Check if the total balance is sufficient to clear the debt
-    if (totalBalance < debt.Amount)
-    {
-        // Insufficient balance error
-        errorMessage = "Insufficient balance to clear the debt.";
-        showErrorModal = true;  // Show the error popup
-        Console.WriteLine("Insufficient balance to clear the debt.");
-        return;
-    }
-
-    // If the balance is sufficient, clear the debt
-    var success = await DebtService.ClearDebt(debtId);
-
-    if (success)
-    {
-       
-        debts = DebtService.GetAllDebts();
-        CalculateTotals(); // Recalculate totals
-
-        // Provide success feedback
-        Console.WriteLine("Debt cleared successfully.");
-        
-    }
-    else
-    {
-        // If Debt clearing fails, show error message
-        Console.WriteLine("Failed to clear the debt.");
-        errorMessage = "Failed to clear the debt. Please try again.";
-        showErrorModal = true;  // Show the error popup
-    }
-}
-
-private void CloseErrorModal()
-{
-    showErrorModal = false;
-}
-
 }

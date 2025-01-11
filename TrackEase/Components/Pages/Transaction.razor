@@ -1,5 +1,4 @@
 ﻿@page "/transaction"
-@using TrackEase.Models;
 
 <head>
     <link rel="stylesheet" href="css/Transaction.css" />
@@ -8,7 +7,6 @@
 <h1><b>Transaction</b></h1>
 
 <!-- Search Bar and Date Filter -->
-
 <div class="search-filter-container">
     <div class="search-bar">
         <input type="text" @bind="searchTitle"
@@ -59,7 +57,7 @@
                     <td>@transaction.Title</td>
                     <td><span>@transaction.TagName</span></td>
                     <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
-                    <td>@GlobalState.CurrentUser?.Pref_currency  @transaction.Amount</td>
+                    <td>@GlobalState.CurrentUser?.Pref_currency @transaction.Amount</td>
                     <td>
                         <span class="@(transaction.Type == "Debt" ? "text-warning" :
                                      transaction.Type == "Expense" ? "text-danger" :
@@ -83,12 +81,13 @@
         </tbody>
     </table>
 </div>
+
 <!-- Popup Modal -->
 @if (showEditPopup)
 {
     <div class="modal-overlay">
         <div class="modal fade show">
-            <div class="modal-dialog custom-modal-width"> <!-- Custom width applied -->
+            <div class="modal-dialog custom-modal-width">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Edit Transaction Note</h5>
@@ -115,12 +114,13 @@
         </div>
     </div>
 }
+
 <!-- Error Popup Modal -->
 @if (!string.IsNullOrEmpty(errorMessage))
 {
     <div class="modal-overlay">
         <div class="modal fade show">
-            <div class="modal-dialog custom-modal-width"> <!-- Custom width applied -->
+            <div class="modal-dialog custom-modal-width">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title text-danger">Error</h5>
@@ -187,7 +187,7 @@
             else
             {
                 <tr>
-                    <td colspan="2">No tags found.</td>
+                    <td colspan="3">No tags found.</td>
                 </tr>
             }
         </tbody>
@@ -206,20 +206,20 @@
     private DateTime? startDate;
     private DateTime? endDate;
     private string? errorMessage;
-   
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            transactions = await TransactionSerive.GetAllTransactions();
+            transactions = await TransactionService.GetAllTransactions();
             tags = TagService.GetAllTags();
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error initializing data: {ex.Message}");
+            errorMessage = "failed to get tags";
         }
     }
-    
+
     private void OpenEditPopup(int transactionId)
     {
         selectedTransactionId = transactionId;
@@ -227,6 +227,7 @@
         note = transaction?.Notes ?? string.Empty;
         showEditPopup = true;
     }
+
     private void CloseEditPopup()
     {
         showEditPopup = false;
@@ -234,54 +235,45 @@
         selectedTransactionId = 0;
         errorMessage = string.Empty;
     }
+
     private void CloseErrorPopup()
     {
-        errorMessage = null; // Clear error message when closing the popup
+        errorMessage = null; 
     }
-    // Function to submit the note for the selected transaction
+
     private async Task SubmitNote()
     {
         try
         {
-            // Find the transaction to update
             var transactionToUpdate = transactions.FirstOrDefault(t => t.Id == selectedTransactionId);
             if (transactionToUpdate == null)
             {
-                // Transaction not found
-                Console.WriteLine("Transaction not found.");
                 return;
             }
 
-            // Update the Notes field
             transactionToUpdate.Notes = note;
 
-            // Call the service to update the transaction
-            var updateResult = await TransactionSerive.UpdateTransaction(transactionToUpdate);
+            var updateResult = await TransactionService.UpdateTransaction(transactionToUpdate);
 
             if (updateResult)
             {
-                // Success: Refresh the transaction list and close the modal
-                Console.WriteLine("Note updated successfully.");
-                transactions = await TransactionSerive.GetAllTransactions();
+                transactions = await TransactionService.GetAllTransactions();
                 CloseEditPopup();
             }
             else
             {
-                // Failure: Handle appropriately
-                Console.WriteLine("Failed to update the note.");
+                errorMessage = "Failed to update the note.";
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error updating note: {ex.Message}");
+            errorMessage = "Failed to update the note.";
         }
     }
- 
 
     private void ShowError(string message)
     {
         errorMessage = message;
-        // Show the error popup
     }
 
     private IEnumerable<Models.Transaction> FilteredTransactions()
@@ -300,40 +292,35 @@
         StateHasChanged();
     }
 
-   
     private void HandleTagSubmit()
     {
         try
         {
-            // Validate that the newTag is not null or empty for Name and TagType
             if (string.IsNullOrEmpty(newTag?.TagName))
             {
-                errorMessage = "Tag name cannot be empty."; // Set error message
-                return; // Stop execution if the tag name is invalid
+                errorMessage = "Tag name cannot be empty."; 
+                return; 
             }
 
             if (string.IsNullOrEmpty(newTag?.TagType))
             {
-                errorMessage = "Tag type cannot be empty."; // Set error message if TagType is missing
-                return; // Stop execution if TagType is invalid
+                errorMessage = "Tag type cannot be empty.";
+                return;
             }
 
-            // Add the tag using the TagService
             if (TagService.AddTag(newTag))
             {
-                newTag = new Tag(); // Reset form
-                tags = TagService.GetAllTags(); // Refresh the tags list
-                Console.WriteLine("Tag added successfully!");
+                newTag = new Tag(); 
+                tags = TagService.GetAllTags(); 
             }
             else
             {
-                errorMessage = "Failed to add tag. Duplicate or invalid input."; // Set error message
+                errorMessage = "Failed to add tag. Duplicate or invalid input."; 
             }
         }
         catch (Exception ex)
         {
-            errorMessage = $"Error adding tag: {ex.Message}"; // Set error message for unexpected errors
+            errorMessage = "Failed to add tag."; 
         }
     }
-
 }
