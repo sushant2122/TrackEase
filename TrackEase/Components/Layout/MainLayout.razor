@@ -4,11 +4,12 @@
 
 <div class="page">
 
-
+    @if (GlobalState.CurrentUser != null)
+    {
         <div class="sidebar">
-            <NavMenu />
+            <NavMenu/>
         </div>
-    
+    }
 
     <main>
         <article class="content px-4">
@@ -29,9 +30,8 @@
     private GlobalState _globalState = new();
     private void LogoutHandler()
     {
-        if (_globalState.CurrentUser == null)
-        {
             Navigation.NavigateTo("/login");
-        }
+      
+            GlobalState.CurrentUser = null; 
     }
 }
