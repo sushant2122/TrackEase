@@ -35,10 +35,10 @@ public class TransactionService : BaseService<Transaction>, ITransactionService
     {
         try
         {
-
-            // Add the transaction to the list
-            _transactions.Add(new Transaction
+            // Create a new Transaction object with a unique Id and add it to the list
+            var newTransaction = new Transaction
             {
+                Id = _transactions.Any() ? _transactions.Max(t => t.Id) + 1 : 1, // Assign a unique Id
                 Title = transaction.Title,
                 Description = transaction.Description,
                 TagName = transaction.TagName,
@@ -46,37 +46,21 @@ public class TransactionService : BaseService<Transaction>, ITransactionService
                 Amount = transaction.Amount,
                 Type = transaction.Type,
                 Notes = transaction.Notes
-            });
+            };
 
-            // Save the transactions
+            _transactions.Add(newTransaction);
+
+            // Save the updated list of transactions to the file
             SaveAll(_transactions, AppTransactionsFilePath);
             return true; // Return true to indicate success
         }
         catch (Exception ex)
         {
-            // Log the error (you can replace this with a UI message or other appropriate handling)
-            Console.WriteLine($"Error: {ex.Message}");
-            return false; // Return false to indicate failure
+            // Log the error and return false to indicate failure
+            Console.WriteLine($"Error adding transaction: {ex.Message}");
+            return false;
         }
     }
+
     
-
-
-    // Simulated SearchUser logic
-    public async Task<List<Transaction>> SearchTransactions(string searchTitle)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(searchTitle))
-                throw new ArgumentNullException("Title Cannot be Null or Empty", nameof(searchTitle));
-
-            return await Task.FromResult(
-                _transactions.Where(t => t.Title.Contains(searchTitle, StringComparison.OrdinalIgnoreCase)).ToList());
-
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("An error occurred while searching for the user.", ex);
-        }
-    }
 }

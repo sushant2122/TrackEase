@@ -8,5 +8,5 @@ public interface ITransactionService
 
     Task<List<Transaction>> GetAllTransactions();
 
-    Task<List<Transaction>> SearchTransactions(string searchTitle);
+   
 }
