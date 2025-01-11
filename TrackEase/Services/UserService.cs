@@ -27,14 +27,20 @@ public class UserService : BaseService<User>, IUserService
     }
 
     // Simulated authentication login logic
-    public async Task<bool> Login(User user)
+    public async Task<User> Login(User user)
     {
         if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
         {
-            return false;
+            return null; // Return null if the username or password is empty
         }
-        return _users.Any(u => u.Username == user.Username && u.Password == HashPassword(user.Password));
+
+        // Find the user that matches the username and password
+        var loggedInUser = _users.FirstOrDefault(u => u.Username == user.Username && u.Password == HashPassword(user.Password));
+
+        // If the user is found, return the user details; otherwise, return null
+        return loggedInUser;
     }
+
     
     private string HashPassword(string password)
     {

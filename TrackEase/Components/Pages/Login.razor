@@ -19,15 +19,15 @@
 			</div>
 			<div class="form-group">
 				<label for="Currency1"><b>Select Currency</b></label>
-				<select class="form-control" id="Currency1" @bind="Users.Pref_currency">
-					<option value="Npr">Npr</option>
-					<option value="Aud">Aud</option>
+				<select class="form-control" id="Currency1" @bind="Pref_currency">
+					<option value=""></option>
+					<option value="रु">Npr</option>
+					<option value="£">Pound</option>
+					<option value="¥">Yuan</option>
+					<option value="$">Cad</option>
 				</select>
 			</div>
-			@if (!string.IsNullOrEmpty(ErrorMessage))
-			{
-				<div class="alert alert-danger">@ErrorMessage</div>
-			}
+		
 			<button type="submit" class="btn btn-primary">Login</button>
 		</form>
 	</div>
@@ -43,17 +43,31 @@
 
 	public Models.User Users { get; set; } = new();
 	private string? ErrorMessage;
-
-	private async void HandleLoginAsync()
+	private string? Pref_currency;
+	private async Task HandleLoginAsync()
 	{
-		if (await UserService.Login(Users))
+		// Check if the currency is selected
+		if (string.IsNullOrEmpty(Pref_currency))
 		{
-			
+			ErrorMessage = "Please select a currency.";
+			return;
+		}
+
+		var loggedInUser = await UserService.Login(Users);
+
+		if (loggedInUser != null)
+		{
+			// Successfully logged in, redirect to dashboard
+			GlobalState.CurrentUser = loggedInUser;
+			GlobalState.CurrentUser.Pref_currency = Pref_currency;
+
 			Nav.NavigateTo("/dashboard");
 		}
 		else
 		{
+			// Invalid login attempt
 			ErrorMessage = "Invalid username or password.";
 		}
 	}
+
 }

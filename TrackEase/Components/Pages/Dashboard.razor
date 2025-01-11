@@ -12,43 +12,45 @@
 
 
     <!-- Cards for Totals -->
+    <h3>Welcome, @GlobalState.CurrentUser?.Username  </h3>
     <div class="row">
+        
         <div class="col-md-4">
             <div class="dashboard-card bg-primary text-white text-center">
                 <h5>Total Balance</h5>
-                <h2> @totalBalance</h2>
+                <h2>@GlobalState.CurrentUser?.Pref_currency @totalBalance</h2>
             </div>
         </div>
         <div class="col-md-4">
             <div class="dashboard-card bg-success text-white text-center">
                 <h5>Total Inflows</h5>
-                <h2>@totalIncome</h2>
+                <h2>@GlobalState.CurrentUser?.Pref_currency @totalIncome</h2>
             </div>
         </div>
         <div class="col-md-4">
             <div class="dashboard-card bg-danger text-white text-center">
                 <h5>Total Outflows</h5>
-                <h2>@totalExpense</h2>
+                <h2>@GlobalState.CurrentUser?.Pref_currency @totalExpense</h2>
             </div>
         </div>
         <div class="col-md-4">
             <div class="dashboard-card bg-warning text-white text-center">
                 <h5>Total Debt</h5>
-                <h2>@totalDebt</h2>
+                <h2>@GlobalState.CurrentUser?.Pref_currency @totalDebt</h2>
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="dashboard-card bg-info text-white text-center">
                 <h5>Remaining Debt</h5>
-                <h2>@totalRemainingDebt</h2>
+                <h2>@GlobalState.CurrentUser?.Pref_currency @totalRemainingDebt</h2>
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="dashboard-card bg-success  text-white text-center">
                 <h5>Cleared Debt</h5>
-                <h2>@totalClearedDebt</h2>
+                <h2>@GlobalState.CurrentUser?.Pref_currency @totalClearedDebt</h2>
             </div>
         </div>
     </div>
@@ -106,7 +108,7 @@
                               
                                     <td><span>@transaction.TagName</span></td>
                                     <td>  <span>@transaction.Date.ToString("yyyy-MM-dd")</span></td>
-                                    <td>    <span>@transaction.Amount</span></td>
+                                    <td>    <span>@GlobalState.CurrentUser?.Pref_currency @transaction.Amount</span></td>
                                     <td>
                                         <span class="@(transaction.Type == "Debt" ? "text-warning" :
                                                      transaction.Type == "Expense" ? "text-danger" :
@@ -158,7 +160,7 @@
                             {
                                 <tr>
                                     <td>@debt.Title</td>
-                                    <td>Npr. @debt.Amount</td>
+                                    <td>@GlobalState.CurrentUser?.Pref_currency  @debt.Amount</td>
                                     <td>@debt.DueDate</td>
                                     <td>@debt.Source</td>
                                     <td><span class="text-danger">@debt.Status</span></td>
@@ -242,7 +244,7 @@
                              
                                     <td><span>@transaction.TagName</span></td>
                                     <td>  <span>@transaction.Date.ToString("yyyy-MM-dd")</span></td>
-                                    <td>    <span>@transaction.Amount</span></td>
+                                    <td>    <span>@GlobalState.CurrentUser?.Pref_currency @transaction.Amount</span></td>
                                     <td>
                                         <span class="@(transaction.Type == "Debt" ? "text-warning" :
                                                      transaction.Type == "Expense" ? "text-danger" :
@@ -323,7 +325,7 @@
                         <input type="date" class="form-control" @bind="newTransaction.Date" />
                     </div>
                     <div class="mb-3">
-                        <label>Amount</label>
+                        <label>Amount (@GlobalState.CurrentUser?.Pref_currency)</label>
                         <input type="number" class="form-control" @bind="newTransaction.Amount" />
                     </div>
                     <div class="mb-3">
@@ -504,7 +506,7 @@
     
     
     // Add transaction
-    private async Task AddTransaction()
+private async Task AddTransaction()
 {
     try
     {
@@ -515,12 +517,26 @@
             return; // Stop execution if the type is invalid
         }
 
+        // Validate that the title is not null or empty
+        if (string.IsNullOrEmpty(newTransaction.Title))
+        {
+            ErrorMessage = "Transaction title cannot be empty.";
+            return; // Stop execution if the title is invalid
+        }
+
+        // Validate that the amount is not null, empty, or invalid
+        if (newTransaction.Amount <= 0)
+        {
+            ErrorMessage = "Amount must be greater than zero.";
+            return; // Stop execution if the amount is invalid
+        }
+
         // Validate if the transaction is an "Expense" and check for sufficient funds
         if (newTransaction.Type == "Expense")
         {
             if (totalBalance < newTransaction.Amount)
             {
-                ErrorMessage = "Insufficient amount";
+                ErrorMessage = "Insufficient amount.";
                 return; // Prevent further execution
             }
         }

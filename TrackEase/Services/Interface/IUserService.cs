@@ -5,7 +5,6 @@ namespace TrackEase.Services.Interface;
 public interface IUserService
 {
     /// Logs in a user using their credentials.
-    Task<bool> Login(User user);
-
+    Task<User> Login(User user);
    
 }

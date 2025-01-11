@@ -27,7 +27,7 @@
                     <tr>
                         <td>@debt.Id</td>
                         <td>@debt.Title</td>
-                        <td>Npr. @debt.Amount</td>
+                        <td>@GlobalState.CurrentUser?.Pref_currency  @debt.Amount</td>
                         <td>@debt.DueDate</td>
                         <td>@debt.ClearedDate</td>
                         <td>@debt.Source</td>
