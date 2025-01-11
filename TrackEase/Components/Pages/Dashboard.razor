@@ -185,10 +185,92 @@
             
             
         </div>
-
         
-
     </div>
+    <div class="row">
+        <div class="dashboard-card">
+            <h2><b>Highest Lowest Transactions</b></h2>
+            <!-- Search Bar and Date Filter -->
+
+            <!-- Search Bar and Type Filter -->
+            <div class="search-filter-container">
+                <div class="type-filter">
+                    <label for="typeFilter">Type:</label>
+                    <select class="form-control" id="typeFilter" @bind="selectedType">
+                        <option value="">All</option>
+                        <option value="Income">Inflow</option>
+                        <option value="Expense">Outflow</option>
+                        <option value="Debt">Debt</option>
+                    </select>
+                </div>
+
+                <div class="type-filter">
+                    <label for="typeSort">Sort:</label>
+                    <select class="form-control" id="typeSort" @bind="selectedSort">
+                        <option value="">All</option>
+                        <option value="Highest">Highest</option>
+                        <option value="Lowest">Lowest</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="transaction-list">
+                    <table class="table">
+                        <thead>
+                        <tr>
+
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Tag</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Notes</th>
+                        </tr>
+
+                        </thead>
+                        <tbody id="transactionTable">
+                        @if (transactions.Any())
+                        {
+                            @foreach (var transaction in FilteredSortTransactions())
+                            {
+                                <tr>
+
+                                    <td><span>@transaction.Title</span></td>
+                                    <td><span>@transaction.Description</span></td>
+                                    <td><span>@transaction.TagName</span></td>
+                                    <td>  <span>@transaction.Date.ToString("yyyy-MM-dd")</span></td>
+                                    <td>    <span>@transaction.Amount</span></td>
+                                    <td>
+                                        <span class="@(transaction.Type == "Debt" ? "text-warning" :
+                                                     transaction.Type == "Expense" ? "text-danger" :
+                                                     transaction.Type == "Income" ? "text-success" : "")">
+                                            @transaction.Type
+                                        </span>
+                                    </td>
+                                    <td> <span>@transaction.Notes</span></td>
+
+                                </tr>
+                            }
+
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7">No transactions found.</td>
+                            </tr>
+
+                        }
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
 </div>
 <!--Transaction modal-->
 @if (showModal)
@@ -286,6 +368,8 @@
  
 
     // Fields
+    private string selectedType;
+    private string selectedSort;
     private Models.Transaction newTransaction = new();
     private List<Models.Tag> _tags = new();
     private Models.Debt newDebt = new();
@@ -360,6 +444,35 @@
     {
         return debts.Where(d => d.Status.Equals("Pending", StringComparison.OrdinalIgnoreCase));
     }
+    //filtered transaction for highestlowest
+    private IEnumerable<Models.Transaction> FilteredSortTransactions()
+    {
+        // Filter by type (Income, Expense, or Debt)
+        var filteredTransactions = transactions.AsEnumerable();
+
+        if (!string.IsNullOrEmpty(selectedType))
+        {
+            filteredTransactions = filteredTransactions.Where(t => t.Type.Equals(selectedType, StringComparison.OrdinalIgnoreCase));
+        }
+
+        // Sort based on selected sort type (Highest or Lowest)
+        if (selectedSort == "Highest")
+        {
+            filteredTransactions = filteredTransactions
+                .OrderByDescending(t => t.Amount) // Sort by amount in descending order (Highest)
+                .Take(3); // Get top 3 highest transactions
+        }
+        else if (selectedSort == "Lowest")
+        {
+            filteredTransactions = filteredTransactions
+                .OrderBy(t => t.Amount) // Sort by amount in ascending order (Lowest)
+                .Take(3); // Get top 3 lowest transactions
+        }
+
+        return filteredTransactions;
+    }
+
+
 
     // Open modal
     private void OpenModal()
