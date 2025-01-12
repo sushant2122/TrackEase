@@ -452,7 +452,9 @@
         {
             _tags = GetAllTags(); 
         }
+        ErrorMessage = null;
         showModal = true;
+        
     }
 
     private void CloseModal() => showModal = false;
@@ -507,6 +509,7 @@
                 newDebt.Status = "Pending"; 
 
                 var debtResult = await DebtService.addDebt(newDebt);
+             
 
                 if (!debtResult)
                 {

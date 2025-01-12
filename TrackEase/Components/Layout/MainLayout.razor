@@ -23,11 +23,4 @@
 <MudDialogProvider />
 
 @code {
-    private GlobalState _globalState = new();
-
-    private void LogoutHandler()
-    {
-        Navigation.NavigateTo("/login");
-        GlobalState.CurrentUser = null;
-    }
 }
