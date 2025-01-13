@@ -1,5 +1,5 @@
 ﻿@page "/transaction"
-
+@using System.Text;
 <head>
     <link rel="stylesheet" href="css/Transaction.css" />
 </head>
@@ -285,7 +285,10 @@
             (string.IsNullOrEmpty(selectedType) || t.Type.Equals(selectedType, StringComparison.OrdinalIgnoreCase)) &&
             (!startDate.HasValue || t.Date >= startDate) &&
             (!endDate.HasValue || t.Date <= endDate));
+        
     }
+
+    
 
     private void ApplyFilters()
     {

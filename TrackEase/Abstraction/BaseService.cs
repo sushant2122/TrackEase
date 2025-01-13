@@ -28,13 +28,6 @@ public class BaseService<T> where T : class
 
         File.WriteAllText(filePath, json);
     }
-
-    protected static int GetIdValue(List<T> entity)
-    {
-        if (entity.Count == 0) return 1;
-
-        return entity.Count + 1;
-    }
     
  
 }

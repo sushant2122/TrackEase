@@ -1,1 +1,0 @@
--v --force --timestamp=none --sign - --entitlements /Users/sushant/Documents/3rd year/Dot net/coursework/TrackEase/TrackEase/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/Entitlements.xcent /Users/sushant/Documents/3rd year/Dot net/coursework/TrackEase/TrackEase/bin/Debug/net8.0-maccatalyst/maccatalyst-arm64/TrackEase.app
