@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     "net8.0-android34.0": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "GoogleGson/2.10.1.4": {
         "type": "package",
         "compile": {
@@ -847,6 +859,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -938,6 +962,15 @@
           "lib/net6.0-android30.0/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/MonoAndroid10/_._": {}
+        },
+        "runtime": {
+          "lib/MonoAndroid10/_._": {}
         }
       },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
@@ -2743,6 +2776,18 @@
       }
     },
     "net8.0-android34.0/android-arm": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "GoogleGson/2.10.1.4": {
         "type": "package",
         "compile": {
@@ -3588,6 +3633,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -3664,6 +3721,15 @@
           "lib/net6.0-android30.0/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/MonoAndroid10/_._": {}
+        },
+        "runtime": {
+          "lib/MonoAndroid10/_._": {}
         }
       },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
@@ -5469,6 +5535,18 @@
       }
     },
     "net8.0-android34.0/android-arm64": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "GoogleGson/2.10.1.4": {
         "type": "package",
         "compile": {
@@ -6314,6 +6392,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -6390,6 +6480,15 @@
           "lib/net6.0-android30.0/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/MonoAndroid10/_._": {}
+        },
+        "runtime": {
+          "lib/MonoAndroid10/_._": {}
         }
       },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
@@ -8195,6 +8294,18 @@
       }
     },
     "net8.0-android34.0/android-x64": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "GoogleGson/2.10.1.4": {
         "type": "package",
         "compile": {
@@ -9040,6 +9151,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -9116,6 +9239,15 @@
           "lib/net6.0-android30.0/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/MonoAndroid10/_._": {}
+        },
+        "runtime": {
+          "lib/MonoAndroid10/_._": {}
         }
       },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
@@ -10921,6 +11053,18 @@
       }
     },
     "net8.0-android34.0/android-x86": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "GoogleGson/2.10.1.4": {
         "type": "package",
         "compile": {
@@ -11766,6 +11910,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -11842,6 +11998,15 @@
           "lib/net6.0-android30.0/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/MonoAndroid10/_._": {}
+        },
+        "runtime": {
+          "lib/MonoAndroid10/_._": {}
         }
       },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
@@ -13647,6 +13812,18 @@
       }
     },
     "net8.0-android34.0/iossimulator-arm64": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "GoogleGson/2.10.1.4": {
         "type": "package",
         "compile": {
@@ -14492,6 +14669,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -14565,6 +14754,15 @@
           "lib/net6.0-android30.0/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/MonoAndroid10/_._": {}
+        },
+        "runtime": {
+          "lib/MonoAndroid10/_._": {}
         }
       },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
@@ -16370,6 +16568,18 @@
       }
     },
     "net8.0-android34.0/maccatalyst-arm64": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "GoogleGson/2.10.1.4": {
         "type": "package",
         "compile": {
@@ -17215,6 +17425,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -17288,6 +17510,15 @@
           "lib/net6.0-android30.0/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/MonoAndroid10/_._": {}
+        },
+        "runtime": {
+          "lib/MonoAndroid10/_._": {}
         }
       },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
@@ -19093,6 +19324,18 @@
       }
     },
     "net8.0-ios18.0": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -19909,6 +20152,18 @@
           "lib/net6.0/Newtonsoft.Json.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
         }
       },
       "SkiaSharp/3.118.0-preview.2.3": {
@@ -20012,6 +20267,19 @@
           }
         }
       },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
         "type": "package",
         "compile": {
@@ -20061,6 +20329,18 @@
       }
     },
     "net8.0-ios18.0/android-arm": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -20879,6 +21159,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -20951,6 +21243,19 @@
         "runtime": {
           "lib/net6.0-ios13.6/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -21003,6 +21308,18 @@
       }
     },
     "net8.0-ios18.0/android-arm64": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -21821,6 +22138,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -21893,6 +22222,19 @@
         "runtime": {
           "lib/net6.0-ios13.6/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -21945,6 +22287,18 @@
       }
     },
     "net8.0-ios18.0/android-x64": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -22763,6 +23117,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -22835,6 +23201,19 @@
         "runtime": {
           "lib/net6.0-ios13.6/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -22887,6 +23266,18 @@
       }
     },
     "net8.0-ios18.0/android-x86": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -23703,6 +24094,18 @@
           "lib/net6.0/Newtonsoft.Json.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
         }
       },
       "SkiaSharp/3.118.0-preview.2.3": {
@@ -23780,6 +24183,19 @@
           }
         }
       },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
         "type": "package",
         "compile": {
@@ -23829,6 +24245,18 @@
       }
     },
     "net8.0-ios18.0/iossimulator-arm64": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -24645,6 +25073,18 @@
           "lib/net6.0/Newtonsoft.Json.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
         }
       },
       "SkiaSharp/3.118.0-preview.2.3": {
@@ -24727,6 +25167,19 @@
           }
         }
       },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
         "type": "package",
         "compile": {
@@ -24776,6 +25229,18 @@
       }
     },
     "net8.0-ios18.0/maccatalyst-arm64": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -25594,6 +26059,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -25674,6 +26151,19 @@
           }
         }
       },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
         "type": "package",
         "compile": {
@@ -25723,6 +26213,18 @@
       }
     },
     "net8.0-maccatalyst18.0": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -26539,6 +27041,18 @@
           "lib/net6.0/Newtonsoft.Json.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
         }
       },
       "SkiaSharp/3.118.0-preview.2.3": {
@@ -26622,6 +27136,19 @@
           }
         }
       },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
         "type": "package",
         "compile": {
@@ -26671,6 +27198,18 @@
       }
     },
     "net8.0-maccatalyst18.0/android-arm": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -27489,6 +28028,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -27561,6 +28112,19 @@
         "runtime": {
           "lib/net6.0-maccatalyst13.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -27613,6 +28177,18 @@
       }
     },
     "net8.0-maccatalyst18.0/android-arm64": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -28431,6 +29007,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -28503,6 +29091,19 @@
         "runtime": {
           "lib/net6.0-maccatalyst13.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -28555,6 +29156,18 @@
       }
     },
     "net8.0-maccatalyst18.0/android-x64": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -29373,6 +29986,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -29445,6 +30070,19 @@
         "runtime": {
           "lib/net6.0-maccatalyst13.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -29497,6 +30135,18 @@
       }
     },
     "net8.0-maccatalyst18.0/android-x86": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -30315,6 +30965,18 @@
           }
         }
       },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        }
+      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -30387,6 +31049,19 @@
         "runtime": {
           "lib/net6.0-maccatalyst13.5/SkiaSharp.Views.Maui.Core.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -30439,6 +31114,18 @@
       }
     },
     "net8.0-maccatalyst18.0/iossimulator-arm64": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -31255,6 +31942,18 @@
           "lib/net6.0/Newtonsoft.Json.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
         }
       },
       "SkiaSharp/3.118.0-preview.2.3": {
@@ -31332,6 +32031,19 @@
           }
         }
       },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
         "type": "package",
         "compile": {
@@ -31381,6 +32093,18 @@
       }
     },
     "net8.0-maccatalyst18.0/maccatalyst-arm64": {
+      "Filepicker/1.1.3": {
+        "type": "package",
+        "dependencies": {
+          "Sharprompt": "2.4.1"
+        },
+        "compile": {
+          "lib/net6.0/Filepicker.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Filepicker.dll": {}
+        }
+      },
       "Microcharts.Maui/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -32197,6 +32921,18 @@
           "lib/net6.0/Newtonsoft.Json.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Sharprompt/2.4.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Annotations": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Sharprompt.dll": {}
         }
       },
       "SkiaSharp/3.118.0-preview.2.3": {
@@ -32277,6 +33013,19 @@
           }
         }
       },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Diagnostics.DiagnosticSource/9.0.0": {
         "type": "package",
         "compile": {
@@ -32327,6 +33076,19 @@
     }
   },
   "libraries": {
+    "Filepicker/1.1.3": {
+      "sha512": "r6qfPTOoTpBBEfxHeF2+OyLYV/3QdKXGjfNol+6R7XIWuh1JT8zpTAqeDuUpVsoNXDIjsNpPgrI8bvA//ZNbyg==",
+      "type": "package",
+      "path": "filepicker/1.1.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "filepicker.1.1.3.nupkg.sha512",
+        "filepicker.nuspec",
+        "lib/net6.0/Filepicker.dll"
+      ]
+    },
     "GoogleGson/2.10.1.4": {
       "sha512": "L1vdbwbQzvKUoUGiMpMoJG5fqfLXaP6zMy1a26AYJQJSQKUO7Ojr2U5BAmgQoRxQ8J2GDjBfnfgnrsnorb4y5Q==",
       "type": "package",
@@ -34063,6 +34825,20 @@
         "packageIcon.png"
       ]
     },
+    "Sharprompt/2.4.1": {
+      "sha512": "IGtoGSPTcrVLcqoYlPYveemh3+lzIUSqlt9EMJl3fGWdhx3XLHbYcZY9eMsRGB5v70uqnaIfgviIo2Ioj18OTg==",
+      "type": "package",
+      "path": "sharprompt/2.4.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "icon.png",
+        "lib/netstandard2.0/Sharprompt.dll",
+        "sharprompt.2.4.1.nupkg.sha512",
+        "sharprompt.nuspec"
+      ]
+    },
     "SkiaSharp/3.118.0-preview.2.3": {
       "sha512": "Y/dkGf9iIeP9Tk6Bv1CGMoJD65NaRXSwTQ0ZwfNEhtb/oAHrOTPNcea2b5lD48SunwghDMLPBiDtP41WwIIptg==",
       "type": "package",
@@ -34293,6 +35069,96 @@
         "lib/net6.0/SkiaSharp.Views.Maui.Core.xml",
         "skiasharp.views.maui.core.2.88.3.nupkg.sha512",
         "skiasharp.views.maui.core.nuspec"
+      ]
+    },
+    "System.ComponentModel.Annotations/5.0.0": {
+      "sha512": "dMkqfy2el8A8/I76n2Hi1oBFEbG1SfxD2l5nhwXV3XjlnOmwxJlQbYpJH4W51odnU9sARCSAgv7S3CyAFMkpYg==",
+      "type": "package",
+      "path": "system.componentmodel.annotations/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net45/_._",
+        "lib/net461/System.ComponentModel.Annotations.dll",
+        "lib/netcore50/System.ComponentModel.Annotations.dll",
+        "lib/netstandard1.4/System.ComponentModel.Annotations.dll",
+        "lib/netstandard2.0/System.ComponentModel.Annotations.dll",
+        "lib/netstandard2.1/System.ComponentModel.Annotations.dll",
+        "lib/netstandard2.1/System.ComponentModel.Annotations.xml",
+        "lib/portable-net45+win8/_._",
+        "lib/win8/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net45/_._",
+        "ref/net461/System.ComponentModel.Annotations.dll",
+        "ref/net461/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/System.ComponentModel.Annotations.dll",
+        "ref/netcore50/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/de/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/es/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/fr/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/it/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/ja/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/ko/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/ru/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/zh-hans/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/zh-hant/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/System.ComponentModel.Annotations.dll",
+        "ref/netstandard1.1/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/de/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/es/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/fr/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/it/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/ja/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/ko/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/ru/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/zh-hans/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/zh-hant/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/System.ComponentModel.Annotations.dll",
+        "ref/netstandard1.3/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/de/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/es/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/fr/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/it/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/ja/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/ko/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/ru/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/zh-hans/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/zh-hant/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/System.ComponentModel.Annotations.dll",
+        "ref/netstandard1.4/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/de/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/es/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/fr/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/it/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/ja/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/ko/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/ru/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/zh-hans/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/zh-hant/System.ComponentModel.Annotations.xml",
+        "ref/netstandard2.0/System.ComponentModel.Annotations.dll",
+        "ref/netstandard2.0/System.ComponentModel.Annotations.xml",
+        "ref/netstandard2.1/System.ComponentModel.Annotations.dll",
+        "ref/netstandard2.1/System.ComponentModel.Annotations.xml",
+        "ref/portable-net45+win8/_._",
+        "ref/win8/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.componentmodel.annotations.5.0.0.nupkg.sha512",
+        "system.componentmodel.annotations.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "System.Diagnostics.DiagnosticSource/9.0.0": {
@@ -36413,6 +37279,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0-android34.0": [
+      "Filepicker >= 1.1.3",
       "Microcharts.Maui >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebView.Maui >= 8.0.83",
       "Microsoft.Extensions.Logging.Debug >= 9.0.0",
@@ -36424,6 +37291,7 @@
       "SkiaSharp >= 3.118.0-preview.2.3"
     ],
     "net8.0-ios18.0": [
+      "Filepicker >= 1.1.3",
       "Microcharts.Maui >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebView.Maui >= 8.0.83",
       "Microsoft.Extensions.Logging.Debug >= 9.0.0",
@@ -36435,6 +37303,7 @@
       "SkiaSharp >= 3.118.0-preview.2.3"
     ],
     "net8.0-maccatalyst18.0": [
+      "Filepicker >= 1.1.3",
       "Microcharts.Maui >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebView.Maui >= 8.0.83",
       "Microsoft.Extensions.Logging.Debug >= 9.0.0",
@@ -36500,6 +37369,10 @@
       "net8.0-android34.0": {
         "targetAlias": "net8.0-android",
         "dependencies": {
+          "Filepicker": {
+            "target": "Package",
+            "version": "[1.1.3, )"
+          },
           "Microcharts.Maui": {
             "target": "Package",
             "version": "[1.0.0, )"
@@ -36563,6 +37436,10 @@
       "net8.0-ios18.0": {
         "targetAlias": "net8.0-ios",
         "dependencies": {
+          "Filepicker": {
+            "target": "Package",
+            "version": "[1.1.3, )"
+          },
           "Microcharts.Maui": {
             "target": "Package",
             "version": "[1.0.0, )"
@@ -36626,6 +37503,10 @@
       "net8.0-maccatalyst18.0": {
         "targetAlias": "net8.0-maccatalyst",
         "dependencies": {
+          "Filepicker": {
+            "target": "Package",
+            "version": "[1.1.3, )"
+          },
           "Microcharts.Maui": {
             "target": "Package",
             "version": "[1.0.0, )"

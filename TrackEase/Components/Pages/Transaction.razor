@@ -80,6 +80,9 @@
         }
         </tbody>
     </table>
+
+
+    <button class="btn btn-primary" @onclick="ExportCsv">Export CSV</button>
 </div>
 
 <!-- Popup Modal -->
@@ -132,6 +135,30 @@
                         </div>
                         <div class="form-group text-right">
                             <button type="button" class="btn btn-danger" @onclick="CloseErrorPopup">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<!--Success message-->
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="modal-overlay">
+        <div class="modal fade show">
+            <div class="modal-dialog custom-modal-width">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-success">Success</h5>
+                        <button type="button" class="close" @onclick="CloseErrorPopup">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p class="text-success">@successMessage</p>
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="button" class="btn btn-success" @onclick="CloseErrorPopup">Okay</button>
                         </div>
                     </div>
                 </div>
@@ -206,6 +233,7 @@
     private DateTime? startDate;
     private DateTime? endDate;
     private string? errorMessage;
+    private string? successMessage;
 
     protected override async Task OnInitializedAsync()
     {
@@ -239,6 +267,7 @@
     private void CloseErrorPopup()
     {
         errorMessage = null; 
+        successMessage = null; 
     }
 
     private async Task SubmitNote()
@@ -287,8 +316,31 @@
             (!endDate.HasValue || t.Date <= endDate));
         
     }
+    private async Task ExportCsv()
+    {
+        // Get filtered transactions (replace with your logic to get data)
+        var filteredTransactions = FilteredTransactions();
+        var csvBuilder = new StringBuilder();
 
-    
+        // Write the CSV header
+        csvBuilder.AppendLine("Id,Title,Type,TagName,Date,Amount");
+
+        // Write transaction data to CSV
+        foreach (var transaction in filteredTransactions)
+            csvBuilder.AppendLine($"{transaction.Id},{transaction.Title},{transaction.Type},{transaction.TagName},{transaction.Date:yyyy-MM-dd},{GlobalState.CurrentUser.Pref_currency}{transaction.Amount}");
+        
+        // Generate file path and save the CSV
+        var fileName = $"Transactions_{DateTime.Now:yyyyMMddHHmmss}.csv";
+        var filePath = Path.Combine(FileSystem.AppDataDirectory, fileName);
+
+        // Save CSV content to the file
+        await File.WriteAllTextAsync(filePath, csvBuilder.ToString());
+
+        successMessage = $"Filtered Transaction exported as {fileName}.";
+
+
+    }
+
 
     private void ApplyFilters()
     {

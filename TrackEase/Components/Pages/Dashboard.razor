@@ -195,6 +195,30 @@
         </div>
     }
 
+    @if (!string.IsNullOrEmpty(successMessage))
+    {
+        <div class="modal-overlay">
+            <div class="modal fade show">
+                <div class="modal-dialog custom-modal-width">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-success">Success</h5>
+                            <button type="button" class="close" @onclick="CloseSuccessPopup">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <p class="text-success">@successMessage</p>
+                            </div>
+                            <div class="form-group text-right">
+                                <button type="button" class="btn btn-success" @onclick="CloseSuccessPopup">Okay</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
 </div>
 
 <!--Transaction modal-->
@@ -302,7 +326,7 @@
 
     private decimal totalRemainingDebt;
     private decimal totalClearedDebt;
-
+    private string? successMessage;
     public List<Tag> GetAllTags()
     {
         if (_tags == null || !_tags.Any())
@@ -310,6 +334,12 @@
             _tags = TagService.GetAllTags(); 
         }
         return _tags;
+    }
+    
+    private void CloseSuccessPopup()
+    {
+        
+        successMessage = null; 
     }
 
     private async Task<List<Models.Transaction>> GetTransactions()
@@ -507,7 +537,8 @@
         if (success)
         {
             debts = DebtService.GetAllDebts();
-            CalculateTotals(); 
+            CalculateTotals();
+            successMessage = "debt is cleared.";
         }
         else
         {

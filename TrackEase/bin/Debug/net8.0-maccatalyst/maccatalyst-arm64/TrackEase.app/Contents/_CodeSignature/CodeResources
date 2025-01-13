@@ -100,6 +100,13 @@
 			<key>requirement</key>
 			<string>cdhash H"76b0f8b606d619fe09a4626e2f1239ada79fa68f"</string>
 		</dict>
+		<key>MonoBundle/Filepicker.dll</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			oIZe+cKffbZzPoO5ZF+aVr2FHuexfy7c6dyfNKfAmmw=
+			</data>
+		</dict>
 		<key>MonoBundle/Microcharts.Maui.dll</key>
 		<dict>
 			<key>hash2</key>
@@ -399,6 +406,13 @@
 			<key>hash2</key>
 			<data>
 			IsZJ91/OW+fHzNqIgEc7Y072ns8z9dGritiSyvR9Wgc=
+			</data>
+		</dict>
+		<key>MonoBundle/Sharprompt.dll</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			wjBQi+LCxOnS0ykg5E0Udes4uPbulqHRIZeRDl7wF0A=
 			</data>
 		</dict>
 		<key>MonoBundle/SkiaSharp.Views.Maui.Controls.dll</key>
@@ -1567,14 +1581,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			0X3wsZJbIHGBu6BjKJ8e/kXQ9dN2ags6fYvFGuAc83Q=
+			xi9qffuQWiE3ifWo1rYdkwN7VssuZMfPpXSl/keGgbo=
 			</data>
 		</dict>
 		<key>MonoBundle/TrackEase.pdb</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KPqbZj0CB70jh8v4v5bnGqmjWoW/g6peMg1lNfW5Gao=
+			8W+PiTuZvhdHshj0+f83LqrKYqXYyHaWL4YSN253J2g=
 			</data>
 		</dict>
 		<key>MonoBundle/WindowsBase.dll</key>
@@ -1588,7 +1602,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1Ff6uej5ntMYD4gssq1o2Z2loP6chvYdLuW0/KT/Ajk=
+			dkDLTi6ZhC6OL3tNLuggqzFTldgXRDHDpR1MapqJpt8=
 			</data>
 		</dict>
 		<key>MonoBundle/ar/Microsoft.Maui.Controls.resources.dll</key>
