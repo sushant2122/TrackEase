@@ -60,6 +60,7 @@ public class TransactionService : BaseService<Transaction>, ITransactionService
                 Amount = transaction.Amount,
                 Type = transaction.Type,
                 Notes = transaction.Notes
+                
             };
 
             _transactions.Add(newTransaction);

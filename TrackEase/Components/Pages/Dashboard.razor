@@ -318,12 +318,8 @@
     private decimal totalExpense;
     private decimal totalDebt;
     private decimal totalBalance;
-   
-    private DateTime? startDate;
-    private DateTime? endDate;
     private string Source;
     private List<Models.Transaction> transactions = new();
-
     private decimal totalRemainingDebt;
     private decimal totalClearedDebt;
     private string? successMessage;
@@ -331,7 +327,7 @@
     {
         if (_tags == null || !_tags.Any())
         {
-            _tags = TagService.GetAllTags(); 
+            _tags =  TagService.GetAllTags(); 
         }
         return _tags;
     }
